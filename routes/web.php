@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+/////// Main Landing Page Routes
+
+Route::get('/', [LandingPageController::class, 'index'])->name('index');
+Route::get('/signin', [LandingPageController::class, 'signin'])->name('signin');
+Route::get('/signup', [LandingPageController::class, 'signup'])->name('signup');
+
+
+
+////// End Main Landing Page Routes
