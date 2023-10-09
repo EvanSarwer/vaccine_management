@@ -37,9 +37,9 @@
 
             <div class="text-center text-lg-start pt-5 m-5">
                 
-                <h1 class="display-3 text-black mb-4 pb-3 animated slideInDown">Find Your Community. Find Your Strength.</h1>
+                <h1 class="display-3 text-black mb-4 pb-3 animated slideInDown">Striving for a Healthier Bangladesh - Vaccine Management Initiative</h1>
                 <div class="pr-5">
-                    <h4 class="text-black mb-4 pb-3 animated slideInDown">Join over 850,000 members harnessing the power of their health insights through shared experience.</h4>
+                    <h4 class="text-black mb-4 pb-3 animated slideInDown">Facilitating Health and Well-being: Navigating Bangladesh's Vaccine Landscape with Ease and Efficiency.</h4>
                 </div>
             </div>
             

@@ -104,9 +104,9 @@
             <div class="row g-5">
                 <div class="col-lg-6 col-md-6">
                     <h3 class="m-0 text-primary pb-4"><i class="fa fa-clinic-medical me-3"></i>Vaccine Management</h3>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>9-10, Chittaranjan Avenue, Dhaka-1100</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+88-02-9534255</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@jnu.ac.bd</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -125,7 +125,6 @@
                     <a class="btn btn-link" href="">Conditions</a>
                     <a class="btn btn-link" href="">Treatments</a>
                     <a class="btn btn-link" href="">Blogs</a>
-                    <a class="btn btn-link" href="">Vacuam Cleaning</a>
                 </div>
             </div>
         </div>
@@ -134,6 +133,7 @@
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         &copy; <a class="border-bottom" href="/">Vaccine Management</a>, All Right Reserved.
+                        Developed By <a class="border-bottom" href="">Md Shahriar Sakil & Md Jubayer</a>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
