@@ -51,16 +51,16 @@
                 <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_meet.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
+                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_meet_bd.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
                         </div>
 
                         <div class="carousel-item">
-                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_learn.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
+                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_learn_bd.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
                             
                         </div>
 
                         <div class="carousel-item">
-                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_track.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
+                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_track_bd.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
                             
                         </div>
                     </div>
