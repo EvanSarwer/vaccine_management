@@ -12,6 +12,14 @@ class LandingPageController extends Controller
         return view('main.index');
     }
 
+    public function myVaccine(){
+        return view('main.myVaccine');
+    }
+
+    public function conditions(){
+        return view('main.conditions');
+    }
+
     public function signin(){
         return view('user.signin');
     }

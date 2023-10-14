@@ -16,9 +16,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">My Health</a>
-                <a href="service.html" class="nav-item nav-link">Conditions</a>
+                <a href="{{route('index')}}" class="nav-item nav-link active">Home</a>
+                <a href="{{route('myVaccine')}}" class="nav-item nav-link">My Vaccine</a>
+                <a href="{{route('conditions')}}" class="nav-item nav-link">Conditions</a>
                 <a href="service.html" class="nav-item nav-link">Treatments</a>
                 <a href="contact.html" class="nav-item nav-link">Blogs</a>
             </div>
