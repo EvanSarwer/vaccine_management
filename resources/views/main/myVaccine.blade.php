@@ -19,7 +19,7 @@
                 <a href="{{route('index')}}" class="nav-item nav-link">Home</a>
                 <a href="{{route('myVaccine')}}" class="nav-item nav-link active">My Vaccine</a>
                 <a href="{{route('conditions')}}" class="nav-item nav-link">Conditions</a>
-                <a href="service.html" class="nav-item nav-link">Treatments</a>
+                <a href="{{route('vaccination')}}" class="nav-item nav-link">Vaccination</a>
                 <a href="contact.html" class="nav-item nav-link">Blogs</a>
             </div>
             <div class="px-2"><button onclick="window.location.href='{{route('signin')}}'" class="nav-item btn btn-outline-dark ">Sign In</button></div>
@@ -35,7 +35,7 @@
             <div class="container ">
                 <div class="row">
                     <div class="col pt-5">
-                        <h1 class="display-3 mb-3 animated slideInDown">My Health</h1>
+                        <h1 class="display-3 mb-3 animated slideInDown">My Vaccine</h1>
                         <h4>Harness the power of your health insights</h4>
                         <p>Take control of your health decision-making and priority-setting
                             by tracking symptoms, treatments, labs, and vitals in one easy-
@@ -148,44 +148,28 @@
             <h2>Event Speakers</h2>
             <p>Here are some of our speakers</p>
           </div> --}}
+
+
   
           <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
-                    <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">60%</p>
-                    <h3>Phiser</h3>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
-                    <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">60%</p>
-                    <h3>Phiser</h3>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
-                    <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">60%</p>
-                    <h3>Phiser</h3>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
-                    <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">60%</p>
-                    <h3>Phiser</h3>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
-                    <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">60%</p>
-                    <h3>Phiser</h3>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
-                    <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">60%</p>
-                    <h3>Phiser</h3>
-                </div>
-            </div>
+
+            @if(isset($vaccines) && $vaccines->count() > 0)
+
+                @foreach ($vaccines as $vaccine)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="speaker text-center" data-aos="fade-up" data-aos-delay="100">
+                            <p style="font-weight: bold; font-size: 70px; color: rgb(122, 191, 185);">{{$vaccine->taken_percent}}%</p>
+                            <h3>{{$vaccine->name}}</h3>
+                        </div>
+                    </div>
+
+                @endforeach
+                
+            @else
+                <h2>No Vaccine Available</h2>
+            @endif
+
+            
           </div>
         </div>
   

@@ -30,6 +30,10 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('page_assets/css/style.css') }}" rel="stylesheet">
+
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>

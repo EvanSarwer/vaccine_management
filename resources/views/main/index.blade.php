@@ -19,7 +19,7 @@
                 <a href="{{route('index')}}" class="nav-item nav-link active">Home</a>
                 <a href="{{route('myVaccine')}}" class="nav-item nav-link">My Vaccine</a>
                 <a href="{{route('conditions')}}" class="nav-item nav-link">Conditions</a>
-                <a href="service.html" class="nav-item nav-link">Treatments</a>
+                <a href="{{route('vaccination')}}" class="nav-item nav-link">Vaccination</a>
                 <a href="contact.html" class="nav-item nav-link">Blogs</a>
             </div>
             <div class="px-2"><button onclick="window.location.href='{{route('signin')}}'" class="nav-item btn btn-outline-dark ">Sign In</button></div>
@@ -397,7 +397,7 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h2 class="mb-5">Join over 850,000 members on the road to better health. &nbsp; &nbsp; <a href="{{route('signup')}}" class="btn btn-warning btn-lg" >Join Now!</a></h2> 
+                <h2 class="mb-5">Join over {{$user_count}} members on the road to better health. &nbsp; &nbsp; <a href="{{route('signup')}}" class="btn btn-warning btn-lg" >Join Now!</a></h2> 
             </div>
             <div class="row g-4">
                 

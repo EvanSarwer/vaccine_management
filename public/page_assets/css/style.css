@@ -6,6 +6,27 @@
     --dark: #111111;
 }
 
+.percentage-bar {
+  background-color: #ccc;
+  height: 20px;
+  border-radius: 5px;
+  position: relative;
+  width: 100px; /* Adjust the width as needed */
+}
+
+.progress {
+  height: 100%;
+  border-radius: 5px;
+}
+
+.percentage-text {
+  color: #000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .fw-medium {
     font-weight: 600 !important;
 }
