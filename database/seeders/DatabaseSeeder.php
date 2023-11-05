@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             VeccinesTableSeeder::class,
             VaccineTakesTableSeeder::class,
         ]);
-        \App\Models\User::factory(5)->create();
+        \App\Models\User::factory(400)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

@@ -111,10 +111,10 @@ class LandingPageController extends Controller
     }
 
     public function signin(){
-        return view('user.signin');
+        return view('common.signin');
     }
 
     public function signup(){
-        return view('user.signup');
+        return view('common.signup');
     }
 }
