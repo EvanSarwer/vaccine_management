@@ -7,7 +7,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="{{ route('admin.index') }}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -353,7 +353,7 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="username" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                      <label for="username" class="col-md-4 col-lg-3 col-form-label">Username<span class="text-danger">*</span></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="username" value="{{(old('username')) ? old('username') : $userData->username}}">
                         @error('username')
@@ -364,7 +364,7 @@
                     
 
                     <div class="row mb-3">
-                      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email<span class="text-danger">*</span></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{(old('email')) ? old('email') : $userData->email}}">
                         @error('email')
@@ -374,7 +374,7 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone<span class="text-danger">*</span></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="phone" type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{(old('phone')) ? old('phone') : $userData->phone}}">
                         @error('phone')
@@ -384,7 +384,7 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                      <label for="address" class="col-md-4 col-lg-3 col-form-label">Address<span class="text-danger">*</span></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="address" type="text" class="form-control @error('address') is-invalid @enderror" id="address" value="{{(old('address')) ? old('address') : $userData->address}}">
                         @error('address')

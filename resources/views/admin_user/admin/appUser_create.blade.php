@@ -7,7 +7,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{ route('user.index') }}">
+        <a class="nav-link " href="{{ route('admin.index') }}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -245,150 +245,88 @@
 
   <main id="main" class="main">
 
+    
     <div class="pagetitle">
-      <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Home</a></li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section profile">
-      <div class="row">
-        <div class="col-xl-4">
-
-          <div class="card row">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="{{ (!empty($userData->photo)) ? url('upload/user_images/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}" alt="Profile" class="rounded-circle">
-              <h2>{{$userData->username}}</h2>
-              <!-- <h3>Web Designer</h3>
-              <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div> -->
-              <div class="col-md-12 profile-overview" >
-                  <!-- <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p> -->
-
-                  <h5 class="card-title">Profile Details</h5>
-
-                  <!-- <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                  </div> -->
-
-                  {{-- <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Full Name</div>
-                    <div class="col-lg-9 col-md-8">{{$userData->name}}</div>
+        <h1>App User</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item active">App User</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+  
+          <div class="col-lg-2"></div>
+  
+          <div class="col-lg-8">
+  
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Create App User Form</h5>
+  
+                <!-- Vertical Form -->
+                <form method="POST" action="{{ route('appUser.create.post') }}" class="row g-3">
+                  @csrf 
+  
+                  {{-- <div class="col-12">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}">
+                    @error('name')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
                   </div> --}}
-
-                  <!-- <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div> -->
-
-                  <!-- <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div> -->
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">{{$userData->email}}</div>
+                  <div class="col-12">
+                    <label for="username" class="form-label">Username<span class="text-danger">*</span></label>
+                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}">
+                    @error('username')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
                   </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">{{$userData->phone}}</div>
+                  <div class="col-12">
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}">
+                    @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
                   </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">{{$userData->address}}</div>
+                  <div class="col-12">
+                    <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password">
+                    @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
                   </div>
-
-                  
-                  
-
-                </div>
+                  <div class="col-12">
+                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                    <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ old('phone') }}">
+                    @error('phone')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                  </div>
+                  <div class="col-12">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address" value="{{ old('address') }}" placeholder="">
+                    @error('address')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form><!-- Vertical Form -->
+  
+              </div>
             </div>
+  
+  
           </div>
-
+  
+          <div class="col-lg-2"></div>
         </div>
-
-        <div class="col-xl-8">
-
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
-
-                
-
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
-
-              </ul>
-              <div class="tab-content pt-2">
-
-              
-
-                <div class="tab-pane fade show active pt-3" id="profile-change-password">
-                  <!-- Change Password Form -->
-                  <form method="POST" action="{{ route('user.password.update') }}">
-                  @csrf
-
-                    <div class="row mb-3">
-                      <label for="oldPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="oldPassword" type="password" class="form-control @error('oldPassword') is-invalid @enderror" id="currentPassword">
-                        @error('oldPassword')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="newPassword" type="password" class="form-control @error('newPassword') is-invalid @enderror" id="newPassword">
-                        @error('newPassword')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="reNewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="reNewPassword" type="password" class="form-control @error('reNewPassword') is-invalid @enderror" id="renewPassword">
-                        @error('reNewPassword')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form><!-- End Change Password Form -->
-
-                </div>
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
+      </section>
 
   </main>
 

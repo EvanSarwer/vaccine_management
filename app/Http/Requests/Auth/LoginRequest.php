@@ -56,7 +56,7 @@ class LoginRequest extends FormRequest
                 RateLimiter::hit($this->throttleKey());
     
                 throw ValidationException::withMessages([
-                    'username_email' => trans('auth.failed'),
+                    'password' => "Password doesn't match",
                 ]);
             }else{
                 if($user->status === 'inactive'){

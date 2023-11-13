@@ -30,14 +30,14 @@
                             <input type="text" name="username_email" class="form-control" id="username_email" required>
                             <div class="invalid-feedback">Please enter your username.</div>
                           </div>
-                          <x-input-error :messages="$errors->get('username_email')" class="mt-2" />
+                          <x-input-error :messages="$errors->get('username_email')" class="text-danger mt-2" />
                         </div>
     
                         <div class="col-12">
                           <label for="password" class="form-label">Password</label>
                           <input type="password" name="password" class="form-control" id="password" required>
                           <div class="invalid-feedback">Please enter your password!</div>
-                          <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                          <x-input-error :messages="$errors->get('password')" class="text-danger mt-2" />
                         </div>
     
                         {{-- <div class="col-12">

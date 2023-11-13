@@ -55,6 +55,17 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
 
     Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
+
+
+    Route::get('/appuser/create', [AdminController::class, 'AppUserCreateView'])->name('appUser.create');
+
+    Route::post('/appuser/create', [AdminController::class, 'AppUserCreatePost'])->name('appUser.create.post');
+
+    Route::get('/appuser/edit/{id}', [AdminController::class, 'AppUserEditView'])->name('appUser.edit');
+
+    Route::post('/appuser/edit', [AdminController::class, 'AppUserEditPost'])->name('appUser.edit.post');
+
+    Route::get('/appuser/status/{id}/{status}', [AdminController::class, 'AppUserStatusUpdate'])->name('appUser.status');
 });
 ////// End Admin Pages //////
 

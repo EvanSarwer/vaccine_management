@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -73,8 +74,15 @@ class UserController extends Controller
         // Validation
         $request->validate([
             'oldPassword' => 'required',
-            'newPassword' => 'required|same:reNewPassword|min:8',
+            'newPassword' => ['required', Password::min(8)
+            ->letters()
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+            ->uncompromised(), 'same:reNewPassword'],
             'reNewPassword' => 'required|min:8'
+        ],[
+            'newPassword.same' => 'The new password and confirm password does not match'
         ]);
 
         // Match old password
