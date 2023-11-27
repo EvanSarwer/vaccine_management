@@ -66,6 +66,35 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::post('/appuser/edit', [AdminController::class, 'AppUserEditPost'])->name('appUser.edit.post');
 
     Route::get('/appuser/status/{id}/{status}', [AdminController::class, 'AppUserStatusUpdate'])->name('appUser.status');
+
+
+    ////Property Operation Routes////
+    Route::get('/admin/disease_list', [AdminController::class, 'DiseaseList'])->name('admin.disease_list');
+
+    Route::get('/admin/disease-create', [AdminController::class, 'DiseaseCreateView'])->name('admin.disease.create');
+
+    Route::post('/admin/disease-create', [AdminController::class, 'DiseaseCreatePost'])->name('admin.disease.create.post');
+
+    Route::get('/admin/disease-edit/{id}', [AdminController::class, 'DiseaseEditView'])->name('admin.disease.edit');
+
+    Route::get('/admin/disease-delete/{id}', [AdminController::class, 'DiseaseDelete'])->name('admin.disease.delete');
+
+    Route::post('/admin/disease-edit', [AdminController::class, 'DiseaseEditPost'])->name('admin.disease.edit.post');
+
+    Route::get('/admin/disease-info/{id}', [AdminController::class, 'DiseaseInfo'])->name('admin.disease.info');
+
+    Route::get('/admin/disease/vaccine-create/{disease_id}', [AdminController::class, 'DiseaseVaccineCreateView'])->name('admin.disease.vaccine.create');
+
+    Route::post('/admin/disease/vaccine-create', [AdminController::class, 'DiseaseVaccineCreatePost'])->name('admin.disease.vaccine.create.post');
+
+    Route::get('/admin/disease/vaccine-edit/{id}/{disease_id}', [AdminController::class, 'DiseaseVaccineEditView'])->name('admin.disease.vaccine.edit');
+
+    Route::post('/admin/disease/vaccine-edit', [AdminController::class, 'DiseaseVaccineEditPost'])->name('admin.disease.vaccine.edit.post');
+
+    Route::get('/admin/disease/vaccine-delete/{id}', [AdminController::class, 'DiseaseVaccineDelete'])->name('admin.disease.vaccine.delete');
+    
+
+
 });
 ////// End Admin Pages //////
 

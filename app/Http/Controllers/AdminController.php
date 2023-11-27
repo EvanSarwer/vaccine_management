@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disease;
 use App\Models\User;
+use App\Models\Vaccine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -203,4 +206,206 @@ class AdminController extends Controller
 
         return back();
     }
+
+    //////// Diseases Operation ////////////////
+
+    public function DiseaseList(){
+        $diseases = Disease::all();
+        return view('admin_user.admin.disease_list',compact('diseases'));
+    }
+
+    public function DiseaseCreateView(){
+        return view('admin_user.admin.disease_create');
+    }
+
+
+    public function DiseaseCreatePost(Request $request){
+        // Validation
+        $request->validate([
+            'name' => 'required|unique:diseases,name|min:3',
+        ]);
+
+        $disease = new Disease();
+
+        $disease->name = $request->name;
+        $disease->symptoms = $request->symptoms;
+        $disease->prevention = $request->prevention;
+        $disease->treatment = $request->treatment;
+        $disease->description = $request->description;
+        $disease->save();
+
+        $notification = array(
+            'message' => 'New Disease Added Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/disease_list')->with($notification);
+
+    }
+
+    public function DiseaseEditView($id){
+        $disease = Disease::findOrFail($id);
+        return view('admin_user.admin.disease_edit',compact('disease'));
+    }
+
+    public function DiseaseEditPost(Request $request){
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required|min:4|unique:diseases,name,'.$request->id,
+        ]);
+
+        $disease = Disease::findOrFail($request->id);
+        
+        $disease->name = $request->name;
+
+        if($request->symptoms){
+            $disease->symptoms = $request->symptoms;
+        }
+        
+        if($request->prevention){
+            $disease->prevention = $request->prevention;
+        }
+
+        if($request->treatment){
+            $disease->treatment = $request->treatment;
+        }
+
+        if($request->description){
+            $disease->description = $request->description;
+        }
+        $disease->save();
+
+        $notification = array(
+            'message' => 'Disease Info Updated Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/disease_list')->with($notification);
+    }
+
+    public function DiseaseDelete($id){
+        $disease = Disease::findOrFail($id);
+        if($disease->vaccines->count() > 0){
+            $notification = array(
+                'message' => 'Disease has vaccines. Delete the vaccines first',
+                'alert-type' => 'error',
+            );
+    
+            return redirect('/admin/disease_list')->with($notification);
+        }
+        $disease->delete();
+
+        $notification = array(
+            'message' => 'Disease Deleted Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/disease_list')->with($notification);
+    }
+
+    public function Diseaseinfo($id){
+        $disease = Disease::findOrFail($id);
+        $vaccines = $disease->vaccines;
+        foreach($vaccines as $vaccine){
+            $vaccine->available_quantity = $vaccine->stock_quantity - $vaccine->vaccine_takes->sum('completed_doses');
+            $vaccine->booked_quantity = $vaccine->vaccine_takes->sum(function ($vaccineTake) use ($vaccine) {
+                                            return $vaccine->doses_required - $vaccineTake->completed_doses;
+                                        });
+            $vaccine->given_quantity = $vaccine->vaccine_takes->sum('completed_doses');
+        }
+        return view('admin_user.admin.disease_info',compact('disease','vaccines'));
+    }
+
+    public function DiseaseVaccineCreateView($disease_id){
+        $disease = Disease::findOrFail($disease_id);
+        return view('admin_user.admin.disease_vaccine_create',compact('disease'));
+    }
+
+
+    public function DiseaseVaccineCreatePost(Request $request){
+        // Validation
+        $request->validate([
+            'name' => 'required|unique:vaccines,name|min:3',
+            'disease_id' => 'required',
+            'stock_quantity' => ['integer', 'min:0'],
+            'doses_required' => ['integer', 'min:1'],
+            'dose_gap_number' => ['nullable','integer', 'min:0', Rule::requiredIf(request('doses_required') > 1)],
+            'dose_gap_time' => [Rule::requiredIf(request('doses_required') > 1)],
+        ]);
+
+        $vaccine = new Vaccine();
+
+        $vaccine->name = $request->name;
+        $vaccine->disease_id = $request->disease_id;
+        $vaccine->description = $request->description;
+        $vaccine->manufacturer = $request->manufacturer;
+        $vaccine->doses_required = $request->doses_required;
+        $vaccine->stock_quantity = $request->stock_quantity;
+        $vaccine->dose_gap_number = $request->dose_gap_number;
+        $vaccine->dose_gap_time = $request->dose_gap_time;
+        $vaccine->save();
+
+        $notification = array(
+            'message' => 'New Vaccine Added Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/disease-info/'.$request->disease_id)->with($notification);
+
+    }
+
+    public function DiseaseVaccineEditView($id, $disease_id){
+        $vaccine = Vaccine::findOrFail($id);
+        $disease = Disease::findOrFail($disease_id);
+        return view('admin_user.admin.disease_vaccine_edit',compact('vaccine','disease'));
+    }
+
+
+    public function DiseaseVaccineEditPost(Request $request){
+        // Validation
+        $request->validate([
+            'name' => 'required|min:3|unique:vaccines,name,'.$request->id,
+            'disease_id' => 'required',
+            'stock_quantity' => ['integer', 'min:0'],
+            'doses_required' => ['integer', 'min:1'],
+            'dose_gap_number' => ['nullable','integer', 'min:0', Rule::requiredIf(request('doses_required') > 1)],
+            'dose_gap_time' => [Rule::requiredIf(request('doses_required') > 1)],
+        ]);
+
+        $vaccine = Vaccine::findOrFail($request->id);
+
+        $vaccine->name = $request->name;
+        $vaccine->disease_id = $request->disease_id;
+        $vaccine->description = $request->description;
+        $vaccine->manufacturer = $request->manufacturer;
+        $vaccine->doses_required = $request->doses_required;
+        $vaccine->stock_quantity = $request->stock_quantity;
+        $vaccine->dose_gap_number = $request->dose_gap_number;
+        $vaccine->dose_gap_time = $request->dose_gap_time;
+        $vaccine->save();
+
+        $notification = array(
+            'message' => 'Vaccine Info Updated Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/disease-info/'.$request->disease_id)->with($notification);
+
+    }
+
+    public function DiseaseVaccineDelete($id){
+        $vaccine = Vaccine::findOrFail($id);
+        $disease_id = $vaccine->disease_id;
+        $vaccine->delete();
+
+        $notification = array(
+            'message' => 'Vaccine Deleted Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/disease-info/'.$disease_id)->with($notification);
+    }
+
+
+
 }
