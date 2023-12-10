@@ -13,6 +13,20 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccination Status</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
   
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -192,6 +206,13 @@
           <span>Diseases</span>
         </a>
       </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('admin.vaccine_list')}}">
+          <i class="bi bi-person"></i>
+          <span>Vaccines</span>
+        </a>
+      </li>
   
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
@@ -305,7 +326,7 @@
                     <div class="row mb-3">
                         <label for="disease_name" class="col-md-4 col-lg-3 col-form-label">Disease Name</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="disease_name" type="text" class="form-control @error('disease_name') is-invalid @enderror" id="disease_name" value="{{ $disease->name }}">
+                          <input name="disease_name" type="text" disabled class="form-control @error('disease_name') is-invalid @enderror" id="disease_name" value="{{ $disease->name }}">
                           @error('disease_name')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror

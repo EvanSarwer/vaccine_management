@@ -7,14 +7,14 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('admin.index') }}">
+      <a class="nav-link collapsed" href="{{ route('admin.index') }}">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
+      <a class="nav-link" href="{{ route('admin.vaccinationStatus_list') }}">
         <i class="bi bi-grid"></i>
         <span>Vaccination Status</span>
       </a>
@@ -268,12 +268,12 @@
 
     
     <div class="pagetitle">
-        <h1>App User</h1>
+        <h1>Vaccination Details -User</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
             <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">App User</li>
+            <li class="breadcrumb-item active">Vaccination Details</li>
           </ol>
         </nav>
       </div><!-- End Page Title -->
@@ -286,58 +286,122 @@
   
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Edit App User</h5>
+                <br/>
+                <h4 class="text-center" > Vaccine Management System </h4>
+                <h5 class="card-title">Vaccination Details</h5>
   
                 <!-- Vertical Form -->
-                <form method="POST" action="{{ route('appUser.edit.post') }}" class="row g-3">
+                <form method="POST" action="" class="row">
                   @csrf 
   
-                  <input type="hidden" name="id" value="{{ $app_user->id }}">
+                
+                  <div class="col">
+                    <h6 class="">Registration ID: #{{ $vaccine_take->id }}</h6>
+                    <h6 class="">Registration Date: {{ $vaccine_take->order_date }}</h6>
+                  </div>
+
+                <br/>
+                <br/>
+                  <div class="col-12 row">
+                    <h5 class="text-primary">User Details:</h5>
+                    <div class="col-5">
+                        <h6>Name: {{ $vaccine_take->user->username }}</h6>
+                        <h6>Email: {{ $vaccine_take->user->email }}</h6>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                    <div class="col-5">
+                        <h6>Phone: {{ $vaccine_take->user->phone }}</h6>
+                        <h6>Address: {{ $vaccine_take->user->address }}</h6>
+                    </div>
+                  </div>
+
+                  <br/>
+                <br/>
+                  <div class="col-12 row">
+                    <h5 class="text-primary">Vaccine Details:</h5>
+                    <div class="col-5">
+                        <h6>Name: {{ $vaccine_take->vaccine->name }}</h6>
+                        <h6>Required Doses: {{ $vaccine_take->vaccine->doses_required }}</h6>
+                        <h6>Completed Doses: {{ $vaccine_take->completed_doses }}</h6>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                    <div class="col-5">
+                        <h6>Center: {{ $vaccine_take->center->hospital}}</h6>
+                        <h6>Address: {{ $vaccine_take->center->address ?? 'N/A' }}</h6>
+                        <h6>Phone: {{ $vaccine_take->center->phone ?? 'N/A' }}</h6>
+                        <h6>Email: {{ $vaccine_take->center->email ?? 'N/A' }}</h6>
+                    </div>
+                  </div>
+
+                  <br/>
+                <br/>
+                  <div class="col-12 row">
+                    
+                    <h5 class="text-primary">Doses Schedule:</h5>
+
+                    @foreach ($vaccine_doses as $dose)
+
+                    <h6>
+                        {{ $dose->dose_number }}-dose Date: {{ $dose->dose_date }}
+                        @if($vaccine_take->completed_doses >= $dose->dose_number)
+                            <small class="text-success">Done</small>
+                        @endif
+                    </h6>
+
+                    @endforeach
+
+                  </div>
+
+                
+                <br/>
+                <br/>
+                  <div class="col-12 mt-5 row">
+                    <div class="col-6">
+                        <h5 class="">Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-warning'}}">{{ $vaccine_take->vaccine_status}}</small></h5>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        @if($vaccine_take->vaccine_status == 'Completed')
+                            <a href="" class="btn btn-primary">Download Certificate</a>
+                        @else
+                            <a href="" class="btn btn-primary">Download Vaccination Status</a>
+                        @endif
+                    </div>
+                  </div>
                   {{-- <div class="col-12">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ (old('name')) ? old('name') : $app_user->name }}">
-                    @error('name')
-                      <span class="text-danger">{{ $message }}</span>
+                    <label for="symptoms" class="form-label">Symptoms</label>
+                    <textarea name="symptoms" class="form-control @error('symptoms') is-invalid @enderror" id="symptoms" style="height: 100px">{{ old('symptoms') }}</textarea>
+                    @error('symptoms')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                  <div class="col-12">
+                    <label for="prevention" class="form-label">Prevention</label>
+                    <textarea name="prevention" class="form-control @error('prevention') is-invalid @enderror" id="prevention" style="height: 100px">{{ old('prevention') }}</textarea>
+                    @error('prevention')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                  <div class="col-12">
+                    <label for="treatment" class="form-label">Treatment</label>
+                    <textarea name="treatment" class="form-control @error('treatment') is-invalid @enderror" id="treatment" style="height: 100px">{{ old('treatment') }}</textarea>
+                    @error('treatment')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                  <div class="col-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" style="height: 100px">{{ old('description') }}</textarea>
+                    @error('description')
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div> --}}
-                  <div class="col-12">
-                    <label for="username" class="form-label">Username<span class="text-danger">*</span></label>
-                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ (old('username')) ? old('username') : $app_user->username }}">
-                    @error('username')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                  </div>
-                  <div class="col-12">
-                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
-                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ (old('email')) ? old('email') : $app_user->email }}">
-                    @error('email')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                  </div>
-                  <div class="col-12">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password">
-                    @error('password')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                  </div>
-                  <div class="col-12">
-                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
-                    <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ (old('phone')) ? old('phone') : $app_user->phone }}">
-                    @error('phone')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                  </div>
-                  <div class="col-12">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address" value="{{ (old('address')) ? old('address') : $app_user->address }}" placeholder="1234 Main St">
-                    @error('address')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                  </div>
-                  <div class="text-center">
+                  
+                  {{-- <div class="text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
+                  </div> --}}
                 </form><!-- Vertical Form -->
   
               </div>

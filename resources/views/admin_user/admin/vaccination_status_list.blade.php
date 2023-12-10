@@ -16,7 +16,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
+        <a class="nav-link" href="{{ route('admin.vaccinationStatus_list') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccination Status</span>
         </a>
@@ -202,7 +202,7 @@
       <li class="nav-heading">Property Operation</li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.disease_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.disease_list')}}">
           <i class="bi bi-person"></i>
           <span>Diseases</span>
         </a>
@@ -265,11 +265,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Disease List</h1>
+      <h1>Vaccination</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">Diseases</li>
+          <li class="breadcrumb-item active">Vaccination</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -304,62 +304,160 @@
                   </ul>
                 </div> -->
                 <div class="filter">
-                  <a href="{{ route('admin.disease.create') }}" class="btn btn-primary">Add New</a>
+                  <a href="{{ route('admin.vaccine.registration') }}" class="btn btn-primary">Vaccine Registration</a>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Diseases <span>| Updated List</span></h5>
+                  <h5 class="card-title">Vaccination Status<span>| Updated List</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
-                        <th scope="col">Disease Name</th>
-                        <th scope="col">Symptoms</th>
-                        <th scope="col">Prevention</th>
-                        <th scope="col">treatment</th>
-                        <th scope="col">description</th>
-                        <th scope="col">Operation</th>
+                        <th scope="col">Vaccine Reg.</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Vaccine</th>
+                        <th scope="col">Center</th>
+                        <th scope="col">Registration Date</th>
+                        <th scope="col">First Dose At</th>
+                        <th scope="col">Completed Doses</th> 
+                        <th scope="col">Doses Left</th>
+                        <th scope="col">Details</th>
                       </tr>
                     </thead>
                     <tbody>
-                    @if(count($diseases) > 0)
-                      @foreach($diseases as $key => $disease)
+                    @if(count($vaccine_takes) > 0)
+                      @foreach($vaccine_takes as $key => $vaccine_take)
                       <tr>
-                        <th scope="row"><a href="{{ route('admin.disease.info', $disease->id) }}">{{$disease->name}}</a>
+                        <th scope="row"><a href="">{{$vaccine_take->id}}</a>
                         </th>
-                        <td>{{ $disease->symptoms ? substr($disease->symptoms, 0, 80) : 'Not available' }}
-                            @if ($disease->symptoms && strlen($disease->symptoms) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->symptoms, 80) }}</span>
-                            @endif 
-                        </td>
-                        <td>{{ $disease->prevention ? substr($disease->prevention, 0, 80) : 'Not available' }}
-                            @if ($disease->prevention && strlen($disease->prevention) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->prevention, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->treatment ? substr($disease->treatment, 0, 80) : 'Not available' }}
-                            @if ($disease->treatment && strlen($disease->treatment) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->treatment, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->description ? substr($disease->description, 0, 80) : 'Not available' }}
-                            @if ($disease->description && strlen($disease->description) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->description, 80) }}</span>
-                            @endif
-                        </td>
+                        <td>{{ $vaccine_take->user->username ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->vaccine->name ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->center->hospital ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->order_date ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->first_dose_date ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->completed_doses ?? 'Not available' }}</td>
+                        <td>{{ ($vaccine_take->vaccine->doses_required - $vaccine_take->completed_doses) ?? 'Not available' }}</td>
                         <td>
-                          <a href="{{ route('admin.disease.edit', $disease->id) }}" class="btn btn-primary btn-sm">Edit</a> 
-                          <a href="{{ route('admin.disease.delete', $disease->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                          
+                            <a href="{{ route('admin.vaccine.registration.update', ['id' => $vaccine_take->id]) }}" class="btn btn-primary btn-sm">Update</a>
+                            <a href="{{ route('admin.vaccination.details', ['id' => $vaccine_take->id]) }}" class="btn btn-info btn-sm">View Details</a>
+
+                        </td>
                       </tr>
                       @endforeach
                     @else
                         <tr>
-                        <td colspan="6">No disease available.</td>
+                        <td colspan="6">No Vaccination Status is Available.</td>
+                      </tr>
+                    @endif
+
+                      
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+          <div class="row">
+
+            
+
+            
+            
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <!-- <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div> -->
+                <div class="filter">
+                  {{-- <a href="{{ route('admin.vaccine.create') }}" class="btn btn-primary">Add New</a> --}}
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Vaccine Wise Status <span>| Updated List</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Vaccine Name</th>
+                        <th scope="col">Disease</th>
+                        <th scope="col">Doses Required</th>
+                        <th scope="col">Vaccinated</th>
+                        <th scope="col">Given Doses</th>
+                        <th scope="col">Booked Stock</th> 
+                        <th scope="col">Available Stock</th>
+                        <th scope="col">Totak Stock</th>
+                        <th scope="col">Manufacturer Co.</th>
+                        <th scope="col">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    @if(count($vaccines) > 0)
+                      @foreach($vaccines as $key => $vaccine)
+                      <tr>
+                        <th scope="row"><a href="">{{$vaccine->name}}</a>
+                        </th>
+                        <td>{{ $vaccine->disease_name ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->doses_required ?? 'Not available' }}</td>
+                        <td>
+                            <div class="percentage-bar">
+                                <div class="progress" style="width: {{$vaccine->vaccine_taken_percent}}%; background-color: #3498db;">
+                                    <span class="percentage-text">{{$vaccine->vaccine_taken_percent}}%</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ $vaccine->given_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->booked_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->available_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->stock_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->manufacturer ?? 'Not available' }}</td>
+                        <td>
+                            <a href="{{ route('admin.vaccinationStatus.vaccine', ['id' => $vaccine->id]) }}" class="btn btn-primary btn-sm">Vaccination Status</a>
+                        </td>
+                      </tr>
+                      @endforeach
+                    @else
+                        <tr>
+                        <td colspan="6">No vaccines available.</td>
                       </tr>
                     @endif
 

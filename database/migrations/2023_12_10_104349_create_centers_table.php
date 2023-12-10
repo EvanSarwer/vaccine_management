@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vaccine_takes', function (Blueprint $table) {
+        Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('vaccine_id');
+            $table->string('hospital')->unique();
             $table->string('division');
-            $table->integer('center_id');
-            $table->date('order_date');
-            $table->date('first_dose_date');
-            $table->integer('completed_doses')->default(0);
-            $table->double('total_cost')->nullable();
+            $table->string('address');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vaccine_takes');
+        Schema::dropIfExists('centers');
     }
 };

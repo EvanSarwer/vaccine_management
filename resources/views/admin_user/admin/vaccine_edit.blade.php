@@ -6,7 +6,7 @@
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('admin.index') }}">
           <i class="bi bi-grid"></i>
@@ -27,7 +27,7 @@
           <span>Vaccine Registration</span>
         </a>
       </li><!-- End Dashboard Nav -->
-  
+
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -105,7 +105,7 @@
           </li>
         </ul>
       </li><!-- End Components Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -133,7 +133,7 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -151,7 +151,7 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -174,7 +174,7 @@
           </li>
         </ul>
       </li><!-- End Charts Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -197,67 +197,67 @@
           </li>
         </ul>
       </li><!-- End Icons Nav --> --}}
-  
+
       <li class="nav-heading">Property Operation</li>
-  
+
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.disease_list') }}">
+        <a class="nav-link collapsed" href="{{route('admin.disease_list')}}">
           <i class="bi bi-person"></i>
           <span>Diseases</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.vaccine_list')}}">
+        <a class="nav-link" href="{{route('admin.vaccine_list')}}">
           <i class="bi bi-person"></i>
           <span>Vaccines</span>
         </a>
       </li>
-  
+
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-contact.html">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>
       </li><!-- End Contact Page Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
         </a>
       </li><!-- End Register Page Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
       </li><!-- End Login Page Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
           <span>Error 404</span>
         </a>
       </li><!-- End Error 404 Page Nav -->
-  
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav --> --}}
-  
+
     </ul>
-  
+
   </aside>
   <!-- End Sidebar-->
 
@@ -268,12 +268,12 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Disease</h1>
+      <h1>Vaccine</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
           <li class="breadcrumb-item">Item</li>
-          <li class="breadcrumb-item active">Disease - Veccine</li>
+          <li class="breadcrumb-item active">Veccine</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -307,10 +307,8 @@
                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" action="{{ route('admin.disease.vaccine.edit.post') }}" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('admin.vaccine.edit.post') }}" enctype="multipart/form-data">
                     @csrf
-
-                    <input type="hidden" name="disease_id" value="{{ $disease->id }}">
 
                     <input type="hidden" name="id" value="{{ $vaccine->id }}">
 
@@ -326,10 +324,22 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="disease_name" class="col-md-4 col-lg-3 col-form-label">Disease Name</label>
+                        <label for="disease_id" class="col-md-4 col-lg-3 col-form-label">Disease Name</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="disease_name" type="text" disabled class="form-control @error('disease_name') is-invalid @enderror" id="disease_name" value="{{ $disease->name }}">
-                          @error('disease_name')
+                          {{-- <input name="disease_name" type="text" disabled class="form-control @error('disease_name') is-invalid @enderror" id="disease_name" value="{{ $disease->name }}"> --}}
+                          
+                          <select class="form-select @error('disease_id') is-invalid @enderror" name="disease_id" aria-label="Select a category" id="disease_id">
+                            <option value="" selected>Choose disease</option>
+                            @foreach ($diseases as $disease)
+                                <option value="{{ $disease['id'] }}" {{ (old('disease_id')) ? (old('disease_id') == $disease['id'] ? 'selected' : '') : ($vaccine->disease_id == $disease['id'] ? 'selected' : '') }}>
+                                    {{ $disease['name'] }}
+                                </option>
+                            @endforeach
+                          </select>
+                          
+
+
+                          @error('disease_id')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
                         </div>

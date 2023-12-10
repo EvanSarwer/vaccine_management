@@ -16,7 +16,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
+        <a class="nav-link" href="{{ route('admin.vaccinationStatus_list') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccination Status</span>
         </a>
@@ -202,7 +202,7 @@
       <li class="nav-heading">Property Operation</li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.disease_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.disease_list')}}">
           <i class="bi bi-person"></i>
           <span>Diseases</span>
         </a>
@@ -265,16 +265,195 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Disease List</h1>
+      <h1>Vaccination Status</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">Diseases</li>
+          <li class="breadcrumb-item active">Vaccination Status</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
+
+
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+              <div class="card recent-sales overflow-auto">
+
+
+
+
+
+              <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Vaccine Info & Vaccination Status</button>
+                </li>
+
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  <form method="POST" action="{{ route('admin.vaccine.edit.post') }}" enctype="multipart/form-data">
+                    @csrf
+
+
+                    <div class="row mb-3">
+                      <label for="name" class="col-md-4 col-lg-3 col-form-label">Name<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="name" type="text" disabled class="form-control @error('name') is-invalid @enderror" id="name" value="{{ (old('name')) ? old('name') : $vaccine->name }}">
+                        @error('name')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="disease_name" class="col-md-4 col-lg-3 col-form-label">Disease Name</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="disease_name" type="text" disabled class="form-control @error('disease_name') is-invalid @enderror" id="disease_name" value="{{ $vaccine->disease_name }}">
+
+                          @error('disease_name')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="manufacturer" class="col-md-4 col-lg-3 col-form-label">Manufacturer Co.</label>
+                        <div class="col-md-8 col-lg-9">
+                          @if($vaccine->manufacturer)
+                            <input name="manufacturer" type="text" disabled class="form-control @error('manufacturer') is-invalid @enderror" id="manufacturer" value="{{ (old('manufacturer')) ? old('manufacturer') : $vaccine->manufacturer }}">
+                          @else
+                            <input name="manufacturer" type="text" disabled class="form-control @error('manufacturer') is-invalid @enderror" id="manufacturer" value="Not available">
+
+                          @endif
+
+
+
+                          @error('manufacturer')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="description" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                      <div class="col-md-8 col-lg-9">
+                        @if($vaccine->description)
+                          <textarea name="description" disabled class="form-control @error('description') is-invalid @enderror" id="description" style="height: 100px">{{ (old('description')) ? old('description') : $vaccine->description }}</textarea>
+                        @else
+                          <input name="description" type="text" disabled class="form-control @error('description') is-invalid @enderror" id="description" value="Not available">
+                        @endif
+
+                        @error('description')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                      </div>
+                    </div>
+
+                    
+
+                    <div class="row mb-3">
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Dose Details</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="row g-3">
+
+                          <div class="col-md-4">
+                            <label for="doses_required" class="form-label">Dose Required<span class="text-danger">*</span></label>
+                            <input type="text" name="doses_required" disabled class="form-control @error('doses_required') is-invalid @enderror" id="doses_required" value="{{ (old('doses_required')) ? old('doses_required') : $vaccine->doses_required }}" >
+                            @error('doses_required')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div>
+                          <div class="col-md-4">
+                            <label for="dose_gap_number" class="form-label">Dose Gape</label>
+                            <input type="text" name="dose_gap_number" disabled class="form-control @error('dose_gap_number') is-invalid @enderror" id="dose_gap_number" value="{{ (old('dose_gap_number')) ? old('dose_gap_number') : $vaccine->dose_gap_number }}" >
+                            @error('dose_gap_number')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div>
+                          <div class="col-md-4">
+                            <label for="dose_gap_time" class="form-label">Timeline</label>
+                            <select name="dose_gap_time" disabled class="form-select @error('dose_gap_time') is-invalid @enderror" id="dose_gap_time">
+                                <option value="day" {{ ((old('dose_gap_time')) ? old('dose_gap_time') : $vaccine->dose_gap_time) == 'day' ? 'selected' : '' }}>Day</option>
+                                <option value="month" {{ ((old('dose_gap_time')) ? old('dose_gap_time') : $vaccine->dose_gap_time) == 'month' ? 'selected' : '' }}>Month</option>
+                                <option value="year" {{ ((old('dose_gap_time')) ? old('dose_gap_time') : $vaccine->dose_gap_time) == 'year' ? 'selected' : '' }}>Year</option>
+                            </select>
+                            @error('dose_gap_time')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Details<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="row g-2">
+
+                          <div class="col-md-6">
+                            <label for="stock_quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
+                            <input type="text" name="stock_quantity" disabled class="form-control @error('stock_quantity') is-invalid @enderror" id="stock_quantity" value="{{ (old('stock_quantity')) ? old('stock_quantity') : $vaccine->stock_quantity }}" >
+                            @error('stock_quantity')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div>
+                          {{-- <div class="col-md-6">
+                            <label for="offer_percent" class="form-label">Offer in (%)</label>
+                            <input type="text" name="offer_percent" class="form-control @error('offer_percent') is-invalid @enderror" id="offer_percent" value="{{ old('offer_percent') }}" >
+                            @error('offer_percent')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div> --}}
+                        </div>
+                        
+                      </div>
+                    </div>
+
+
+                    {{-- <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </div> --}}
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+
+
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+      </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        
+
+    </div>
+
+
+
 
 
       <div class="row">
@@ -304,62 +483,47 @@
                   </ul>
                 </div> -->
                 <div class="filter">
-                  <a href="{{ route('admin.disease.create') }}" class="btn btn-primary">Add New</a>
+                  {{-- <a href="{{ route('admin.vaccine.create') }}" class="btn btn-primary">Add New</a> --}}
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Diseases <span>| Updated List</span></h5>
+                  <h5 class="card-title">Vaccination Status <span>| Updated List</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
-                        <th scope="col">Disease Name</th>
-                        <th scope="col">Symptoms</th>
-                        <th scope="col">Prevention</th>
-                        <th scope="col">treatment</th>
-                        <th scope="col">description</th>
-                        <th scope="col">Operation</th>
+                        <th scope="col">Vaccine Reg.</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Vaccine</th>
+                        <th scope="col">Center</th>
+                        <th scope="col">Registration Date</th>
+                        <th scope="col">First Dose At</th>
+                        <th scope="col">Completed Doses</th> 
+                        <th scope="col">Doses Left</th>
+                        <th scope="col">Details</th>
                       </tr>
                     </thead>
                     <tbody>
-                    @if(count($diseases) > 0)
-                      @foreach($diseases as $key => $disease)
+                    @if(count($vaccine_takes) > 0)
+                      @foreach($vaccine_takes as $key => $vaccine_take)
                       <tr>
-                        <th scope="row"><a href="{{ route('admin.disease.info', $disease->id) }}">{{$disease->name}}</a>
+                        <th scope="row"><a href="">{{$vaccine_take->id}}</a>
                         </th>
-                        <td>{{ $disease->symptoms ? substr($disease->symptoms, 0, 80) : 'Not available' }}
-                            @if ($disease->symptoms && strlen($disease->symptoms) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->symptoms, 80) }}</span>
-                            @endif 
-                        </td>
-                        <td>{{ $disease->prevention ? substr($disease->prevention, 0, 80) : 'Not available' }}
-                            @if ($disease->prevention && strlen($disease->prevention) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->prevention, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->treatment ? substr($disease->treatment, 0, 80) : 'Not available' }}
-                            @if ($disease->treatment && strlen($disease->treatment) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->treatment, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->description ? substr($disease->description, 0, 80) : 'Not available' }}
-                            @if ($disease->description && strlen($disease->description) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->description, 80) }}</span>
-                            @endif
-                        </td>
+                        <td>{{ $vaccine_take->user->username ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->vaccine->name ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->center->hospital ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->order_date ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->first_dose_date ?? 'Not available' }}</td>
+                        <td>{{ $vaccine_take->completed_doses ?? 'Not available' }}</td>
+                        <td>{{ ($vaccine_take->vaccine->doses_required - $vaccine_take->completed_doses) ?? 'Not available' }}</td>
                         <td>
-                          <a href="{{ route('admin.disease.edit', $disease->id) }}" class="btn btn-primary btn-sm">Edit</a> 
-                          <a href="{{ route('admin.disease.delete', $disease->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                          
+                            <a href="{{ route('admin.vaccination.details', ['id' => $vaccine_take->id]) }}" class="btn btn-info btn-sm">View Details</a>
+                        </td>
                       </tr>
                       @endforeach
                     @else
                         <tr>
-                        <td colspan="6">No disease available.</td>
+                        <td colspan="6">No Vaccination Status is Available.</td>
                       </tr>
                     @endif
 

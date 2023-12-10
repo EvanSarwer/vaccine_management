@@ -202,14 +202,14 @@
       <li class="nav-heading">Property Operation</li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.disease_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.disease_list')}}">
           <i class="bi bi-person"></i>
           <span>Diseases</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.vaccine_list')}}">
+        <a class="nav-link" href="{{route('admin.vaccine_list')}}">
           <i class="bi bi-person"></i>
           <span>Vaccines</span>
         </a>
@@ -265,11 +265,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Disease List</h1>
+      <h1>Vaccine List</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">Diseases</li>
+          <li class="breadcrumb-item active">Vaccines</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -304,62 +304,48 @@
                   </ul>
                 </div> -->
                 <div class="filter">
-                  <a href="{{ route('admin.disease.create') }}" class="btn btn-primary">Add New</a>
+                  <a href="{{ route('admin.vaccine.create') }}" class="btn btn-primary">Add New</a>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Diseases <span>| Updated List</span></h5>
+                  <h5 class="card-title">Vaccines <span>| Updated List</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
-                        <th scope="col">Disease Name</th>
-                        <th scope="col">Symptoms</th>
-                        <th scope="col">Prevention</th>
-                        <th scope="col">treatment</th>
-                        <th scope="col">description</th>
-                        <th scope="col">Operation</th>
+                        <th scope="col">Vaccine Name</th>
+                        <th scope="col">Disease</th>
+                        <th scope="col">Doses Required</th>
+                        <th scope="col">Given Doses</th>
+                        <th scope="col">Booked Stock</th> 
+                        <th scope="col">Available Stock</th>
+                        <th scope="col">Totak Stock</th>
+                        <th scope="col">Manufacturer Co.</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                    @if(count($diseases) > 0)
-                      @foreach($diseases as $key => $disease)
+                    @if(count($vaccines) > 0)
+                      @foreach($vaccines as $key => $vaccine)
                       <tr>
-                        <th scope="row"><a href="{{ route('admin.disease.info', $disease->id) }}">{{$disease->name}}</a>
+                        <th scope="row"><a href="">{{$vaccine->name}}</a>
                         </th>
-                        <td>{{ $disease->symptoms ? substr($disease->symptoms, 0, 80) : 'Not available' }}
-                            @if ($disease->symptoms && strlen($disease->symptoms) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->symptoms, 80) }}</span>
-                            @endif 
-                        </td>
-                        <td>{{ $disease->prevention ? substr($disease->prevention, 0, 80) : 'Not available' }}
-                            @if ($disease->prevention && strlen($disease->prevention) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->prevention, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->treatment ? substr($disease->treatment, 0, 80) : 'Not available' }}
-                            @if ($disease->treatment && strlen($disease->treatment) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->treatment, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->description ? substr($disease->description, 0, 80) : 'Not available' }}
-                            @if ($disease->description && strlen($disease->description) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->description, 80) }}</span>
-                            @endif
-                        </td>
+                        <td>{{ $vaccine->disease_name ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->doses_required ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->given_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->booked_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->available_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->stock_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->manufacturer ?? 'Not available' }}</td>
                         <td>
-                          <a href="{{ route('admin.disease.edit', $disease->id) }}" class="btn btn-primary btn-sm">Edit</a> 
-                          <a href="{{ route('admin.disease.delete', $disease->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                          
+                            <a href="{{ route('admin.vaccine.edit', ['id' => $vaccine->id]) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ route('admin.vaccine.delete', $vaccine->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                        </td>
                       </tr>
                       @endforeach
                     @else
                         <tr>
-                        <td colspan="6">No disease available.</td>
+                        <td colspan="6">No vaccines available.</td>
                       </tr>
                     @endif
 

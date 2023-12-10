@@ -68,16 +68,16 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/appuser/status/{id}/{status}', [AdminController::class, 'AppUserStatusUpdate'])->name('appUser.status');
 
 
-    ////Property Operation Routes////
+    ////Property Operation Routes Disease////
     Route::get('/admin/disease_list', [AdminController::class, 'DiseaseList'])->name('admin.disease_list');
 
     Route::get('/admin/disease-create', [AdminController::class, 'DiseaseCreateView'])->name('admin.disease.create');
 
     Route::post('/admin/disease-create', [AdminController::class, 'DiseaseCreatePost'])->name('admin.disease.create.post');
 
-    Route::get('/admin/disease-edit/{id}', [AdminController::class, 'DiseaseEditView'])->name('admin.disease.edit');
-
     Route::get('/admin/disease-delete/{id}', [AdminController::class, 'DiseaseDelete'])->name('admin.disease.delete');
+
+    Route::get('/admin/disease-edit/{id}', [AdminController::class, 'DiseaseEditView'])->name('admin.disease.edit');
 
     Route::post('/admin/disease-edit', [AdminController::class, 'DiseaseEditPost'])->name('admin.disease.edit.post');
 
@@ -93,6 +93,35 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::get('/admin/disease/vaccine-delete/{id}', [AdminController::class, 'DiseaseVaccineDelete'])->name('admin.disease.vaccine.delete');
     
+
+    ////Property Operation Routes Vaccines////
+    Route::get('/admin/vaccine_list', [AdminController::class, 'VaccineList'])->name('admin.vaccine_list');
+    
+    Route::get('/admin/vaccine-create', [AdminController::class, 'VaccineCreateView'])->name('admin.vaccine.create');
+
+    Route::post('/admin/vaccine-create', [AdminController::class, 'VaccineCreatePost'])->name('admin.vaccine.create.post');
+
+    Route::get('/admin/vaccine-edit/{id}', [AdminController::class, 'VaccineEditView'])->name('admin.vaccine.edit');
+
+    Route::post('/admin/vaccine-edit', [AdminController::class, 'VaccineEditPost'])->name('admin.vaccine.edit.post');
+
+    Route::get('/admin/vaccine-delete/{id}', [AdminController::class, 'VaccineDelete'])->name('admin.vaccine.delete');
+
+
+    ////Property Operation Routes Vaccination Status Dose////
+    Route::get('/admin/vaccination-status_list', [AdminController::class, 'VaccinationStatusList'])->name('admin.vaccinationStatus_list');
+
+    Route::get('/admin/vaccinationStatus-vaccine/{id}', [AdminController::class, 'VaccinationStatusVaccine'])->name('admin.vaccinationStatus.vaccine');
+
+    Route::get('/admin/vaccine-registration', [AdminController::class, 'VaccineRegistrationView'])->name('admin.vaccine.registration');
+
+    Route::post('/admin/vaccine-registration', [AdminController::class, 'VaccineRegistrationPost'])->name('admin.vaccine.registration.post');
+
+    Route::get('/admin/vaccine-registration-update/{id}', [AdminController::class, 'VaccineRegistrationUpdateView'])->name('admin.vaccine.registration.update');
+
+    Route::post('/admin/vaccine-registration-update', [AdminController::class, 'VaccineRegistrationUpdatePost'])->name('admin.vaccine.registration.update.post');
+
+    Route::get('/admin/vaccination-details/{id}', [AdminController::class, 'VaccinationDetailsView'])->name('admin.vaccination.details');
 
 
 });
@@ -111,6 +140,23 @@ Route::middleware(['auth', 'role:user'])->group(function(){
     Route::get('/user/change/password', [UserController::class, 'UserChangePassword'])->name('user.change.password');
 
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
+
+
+    ////Property Operation Routes Vaccination Status Dose////
+    Route::get('/user/vaccine-registration', [UserController::class, 'VaccineRegistrationView'])->name('user.vaccine.registration');
+
+    Route::post('/user/vaccine-registration', [UserController::class, 'VaccineRegistrationPost'])->name('user.vaccine.registration.post');
+
+    Route::get('/user/vaccination-details/{id}', [UserController::class, 'VaccinationDetailsView'])->name('user.vaccination.details');
+
+
+    ////////////////////Vaccine Operation Routes////////////////////
+    Route::get('/user/vaccine_list', [UserController::class, 'VaccineList'])->name('user.vaccine_list');
+
+    Route::get('/user/vaccineWise-registration/{id}', [UserController::class, 'VaccineWiseRegistrationView'])->name('user.vaccineWise.registration');
+
+
+
 });
 ////// End User Pages //////
 

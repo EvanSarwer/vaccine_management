@@ -12,6 +12,20 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccination Status</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
   
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -191,6 +205,13 @@
           <span>Diseases</span>
         </a>
       </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('admin.vaccine_list')}}">
+          <i class="bi bi-person"></i>
+          <span>Vaccines</span>
+        </a>
+      </li>
   
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">

@@ -12,6 +12,20 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccination Status</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
   
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -191,6 +205,13 @@
           <span>Diseases</span>
         </a>
       </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('admin.vaccine_list')}}">
+          <i class="bi bi-person"></i>
+          <span>Vaccines</span>
+        </a>
+      </li>
   
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
@@ -364,7 +385,7 @@
                         <th scope="col">Disease</th>
                         <th scope="col">Doses Required</th>
                         <th scope="col">Given Doses</th>
-                        <th scope="col">Booked Stock</th>
+                        <th scope="col">Booked Stock</th> 
                         <th scope="col">Available Stock</th>
                         <th scope="col">Totak Stock</th>
                         <th scope="col">Manufacturer Co.</th>
@@ -375,19 +396,19 @@
                     @if(count($vaccines) > 0)
                         @foreach($vaccines as $key => $vaccine)
                         <tr>
-                        <th scope="row"><a href="">{{$vaccine->name}}</a>
-                        </th>
-                        <td>{{ $disease->name ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->doses_required ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->given_quantity ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->booked_quantity ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->available_quantity ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->stock_quantity ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->manufacturer ?? 'Not available' }}</td>
-                        <td>
-                            <a href="{{ route('admin.disease.vaccine.edit', ['id' => $vaccine->id, 'disease_id' => $disease->id]) }}" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="{{ route('admin.disease.vaccine.delete', $vaccine->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                        </td>
+                          <th scope="row"><a href="">{{$vaccine->name}}</a>
+                          </th>
+                          <td>{{ $disease->name ?? 'Not available' }}</td>
+                          <td>{{ $vaccine->doses_required ?? 'Not available' }}</td>
+                          <td>{{ $vaccine->given_quantity ?? 'Not available' }}</td>
+                          <td>{{ $vaccine->booked_quantity ?? 'Not available' }}</td>
+                          <td>{{ $vaccine->available_quantity ?? 'Not available' }}</td>
+                          <td>{{ $vaccine->stock_quantity ?? 'Not available' }}</td>
+                          <td>{{ $vaccine->manufacturer ?? 'Not available' }}</td>
+                          <td>
+                              <a href="{{ route('admin.disease.vaccine.edit', ['id' => $vaccine->id, 'disease_id' => $disease->id]) }}" class="btn btn-primary btn-sm">Edit</a>
+                              <a href="{{ route('admin.disease.vaccine.delete', $vaccine->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                          </td>
                         </tr>
                         @endforeach
                     @else
