@@ -236,13 +236,13 @@ class UserController extends Controller
                 $first_dose_date = $vaccine_take_history->first_dose_date;
 
                 if($dose_gap_time == 'day'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addDays(($$vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
+                    $last_dose_date = Carbon::parse($first_dose_date)->addDays(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
                 }else if($dose_gap_time == 'week'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addWeeks(($$vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
+                    $last_dose_date = Carbon::parse($first_dose_date)->addWeeks(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
                 }else if($dose_gap_time == 'month'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addMonths(($$vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
+                    $last_dose_date = Carbon::parse($first_dose_date)->addMonths(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
                 }else if($dose_gap_time == 'year'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addYears(($$vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
+                    $last_dose_date = Carbon::parse($first_dose_date)->addYears(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
                 }
 
                 $current_date = Carbon::now()->format('Y-m-d');
