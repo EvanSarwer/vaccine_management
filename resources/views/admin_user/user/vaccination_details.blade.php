@@ -141,9 +141,9 @@
                     <div class="col-2"></div>
                     <div class="col-4">
                         @if($vaccine_take->vaccine_status == 'Completed')
-                            <a href="" class="btn btn-primary">Download Certificate</a>
+                            <a href="{{ route('vaccination.pdf.certificate', ['id' => $vaccine_take->id]) }}" class="btn btn-primary">Download Certificate</a>
                         @else
-                            <a href="" class="btn btn-primary">Download Vaccination Status</a>
+                            <a href="{{ route('vaccination.pdf.details', ['id' => $vaccine_take->id]) }}" class="btn btn-primary">Download Vaccination Status</a>
                         @endif
                     </div>
                   </div>

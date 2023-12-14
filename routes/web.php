@@ -41,7 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/admin/vaccination-details/pdf/{id}', [CommonController::class, 'VaccinationDetailsPdfView'])->name('admin.vaccination.pdf.details');
+    Route::get('/vaccination-details/pdf/{id}', [CommonController::class, 'VaccinationDetailsPdfView'])->name('vaccination.pdf.details');
+    Route::get('/vaccination-certificate/pdf/{id}', [CommonController::class, 'VaccinationCertificatePdfView'])->name('vaccination.pdf.certificate');
 
 });
 
