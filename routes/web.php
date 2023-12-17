@@ -32,6 +32,8 @@ Route::get('/vaccination', [LandingPageController::class, 'vaccination'])->name(
 Route::get('/signin', [LandingPageController::class, 'signin'])->name('signin');
 Route::get('/signup', [LandingPageController::class, 'signup'])->name('signup');
 
+Route::get('/sendmail', [AdminController::class, 'SendMail'])->name('sendmail');
+
 ////// End Main Landing Page Routes
 
 

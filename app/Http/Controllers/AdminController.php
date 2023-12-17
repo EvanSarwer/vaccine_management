@@ -15,6 +15,8 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use stdClass;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class AdminController extends Controller
 {
@@ -23,7 +25,15 @@ class AdminController extends Controller
     public function index(){
         $user_id = Auth::user()->id;
         $app_users = User::whereNot('id',$user_id)->get();
-        return view('admin_user.admin.index',compact('app_users'));
+
+        $total_user_number = $app_users->where('role', 'user')->count();
+        $taking_vaccination_user_number = VaccineTake::whereNotNull('user_id')->distinct('user_id')->count();
+        $top_vaccine = VaccineTake::select('vaccine_id')->groupBy('vaccine_id')->orderByRaw('COUNT(*) DESC')->first();
+        $top_vaccine = $top_vaccine->vaccine->name;
+        $total_vaccine = Vaccine::all()->count();
+
+
+        return view('admin_user.admin.index',compact('app_users','total_user_number','taking_vaccination_user_number','top_vaccine','total_vaccine'));
     }
 
 
@@ -635,6 +645,17 @@ class AdminController extends Controller
         $vaccine_take->first_dose_date = Carbon::parse($vaccine_take->order_date)->addDays(14)->toDateString();  // 14 days after order date
         $vaccine_take->save();
 
+        $mailData = [
+            'subject' => 'Vaccination Registration Successful',
+            'title' => 'Vaccine Management System',
+            'user_name' => $vaccine_take->user->username,
+            'vaccine' => $vaccine_take->vaccine->name,
+            'registration_date' => $vaccine_take->order_date,
+            'first_dose_date' => $vaccine_take->first_dose_date,
+        ];
+
+        Mail::to($vaccine_take->user->email)->send(new SendMail($mailData));
+
         $notification = array(
             'message' => 'Vaccine Registration Successful',
             'alert-type' => 'success',
@@ -866,6 +887,23 @@ class AdminController extends Controller
 
         return view('admin_user.admin.vaccination_details',compact('vaccine_take','vaccine_doses'));
     }
+
+
+
+    ///////Send Mail/////////
+
+    public function SendMail(){
+        $mailData = [
+            'subject' => 'Bujhonai Beparta',
+            'title' => 'Mail From Vaccine Registration System',
+            'body' => 'This is for testing email using smtp'
+        ];
+
+        Mail::to('evansarwer1@gmail.com')->send(new SendMail($mailData));
+
+        dd("Mail Send Successfully");
+    }
+
 
 
 

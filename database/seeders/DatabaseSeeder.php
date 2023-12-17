@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             VeccinesTableSeeder::class,
             VaccineTakesTableSeeder::class,
             CentersTableSeeder::class,
+            NotificationTableSeeder::class,
         ]);
         \App\Models\User::factory(400)->create();
 

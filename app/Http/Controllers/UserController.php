@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use stdClass;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class UserController extends Controller
 {
@@ -276,6 +278,17 @@ class UserController extends Controller
         $vaccine_take->order_date = Carbon::now()->format('Y-m-d');
         $vaccine_take->first_dose_date = Carbon::parse($vaccine_take->order_date)->addDays(14)->toDateString();  // 14 days after order date
         $vaccine_take->save();
+
+        $mailData = [
+            'subject' => 'Vaccination Registration Successful',
+            'title' => 'Vaccine Management System',
+            'user_name' => $vaccine_take->user->username,
+            'vaccine' => $vaccine_take->vaccine->name,
+            'registration_date' => $vaccine_take->order_date,
+            'first_dose_date' => $vaccine_take->first_dose_date,
+        ];
+
+        Mail::to($vaccine_take->user->email)->send(new SendMail($mailData));
 
         $notification = array(
             'message' => 'Vaccine Registration Successful',

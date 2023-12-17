@@ -43,4 +43,9 @@ class User extends Authenticatable
     public function vaccineTakes(){
         return $this->hasMany(VaccineTake::class, 'user_id');
     }
+
+    public function notifications(){
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+    
 }
