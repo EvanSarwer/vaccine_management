@@ -101,6 +101,11 @@
                   </div>
 
                   <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Date Of Birth</div>
+                    <div class="col-lg-9 col-md-8">{{$userData->dob}}</div>
+                  </div>
+
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
                     <div class="col-lg-9 col-md-8">{{$userData->phone}}</div>
                   </div>
@@ -166,6 +171,16 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{(old('email')) ? old('email') : $userData->email}}">
                         @error('email')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="dob" class="col-md-4 col-lg-3 col-form-label">Date Of Birth<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="dob" type="date" class="form-control @error('dob') is-invalid @enderror" id="dob" value="{{(old('dob')) ? old('dob') : $userData->dob}}">
+                        @error('dob')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
                       </div>

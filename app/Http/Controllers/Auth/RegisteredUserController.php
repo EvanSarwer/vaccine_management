@@ -40,6 +40,7 @@ class RegisteredUserController extends Controller
             ->numbers()
             ->symbols()
             ->uncompromised(), 'confirmed', Rules\Password::defaults()],
+            'dob' => ['required','date'],
             'phone' => ['required', 'string', 'min:10'],
             'address' => ['required', 'string'],
         ]);
@@ -48,6 +49,7 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'dob' => $request->dob,
             'phone' => $request->phone,
             'address' => $request->address,
         ]);

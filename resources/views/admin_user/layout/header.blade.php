@@ -136,7 +136,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
                 You have {{ ($unseen_messages_count > 0) ? $unseen_messages_count : 'no' }} new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Clear all</span></a>
+              <a href="{{ route('message.seen') }}"><span class="badge rounded-pill bg-primary p-2 ms-2">Clear all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -175,7 +175,11 @@
 
 
             <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
+              @if($userData->role == 'admin')
+                <a href="{{ route('admin.message.list') }}">Show all messages</a>
+              @else
+                <a href="{{ route('user.message.list') }}">Show all messages</a>
+              @endif
             </li>
 
           </ul><!-- End Messages Dropdown Items -->

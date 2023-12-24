@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\VaccineTake;
 use Carbon\Carbon;
@@ -171,6 +172,20 @@ class CommonController extends Controller
     
     
     }
+
+    public function MessageSeen(){
+        $user_id = Auth::user()->id;
+        $unseen_messages = Notification::where('user_id',$user_id)->where('type','message')->where('status','unseen')->latest()->get();
+        if(count($unseen_messages) > 0){
+            foreach($unseen_messages as $message){
+                $message->status = 'seen';
+                $message->save();
+            }
+        }
+        return back();
+    }
+
+    
 
 
 

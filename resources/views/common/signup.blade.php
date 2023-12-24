@@ -51,6 +51,13 @@
                         </div>
 
                         <div class="col-12">
+                          <label for="dob" class="form-label">Your Date Of Birth<span class="text-danger">*</span></label>
+                          <input type="date" name="dob" class="form-control" id="dob" value="{{old('dob')}}" required>
+                          <div class="invalid-feedback">Please, enter your date of birth!</div>
+                          <x-input-error :messages="$errors->get('dob')" class="mt-2" />
+                        </div>
+
+                        <div class="col-12">
                             <label for="yourPhone" class="form-label">Your Phone<span class="text-danger">*</span></label>
                             <input type="text" name="phone" class="form-control" id="yourPhone" value="{{old('phone')}}" required>
                             <div class="invalid-feedback">Please, enter your phone number!</div>

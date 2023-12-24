@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('hospital')->unique();
             $table->string('division');
             $table->string('address');
+            $table->text('location_link');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();

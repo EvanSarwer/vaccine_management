@@ -46,6 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/vaccination-details/pdf/{id}', [CommonController::class, 'VaccinationDetailsPdfView'])->name('vaccination.pdf.details');
     Route::get('/vaccination-certificate/pdf/{id}', [CommonController::class, 'VaccinationCertificatePdfView'])->name('vaccination.pdf.certificate');
 
+    Route::get('/message/seen', [CommonController::class, 'MessageSeen'])->name('message.seen');
+    Route::get('/message/list', [CommonController::class, 'MessageList'])->name('message.list');
+
+
 });
 
 
@@ -114,6 +118,21 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/vaccine-delete/{id}', [AdminController::class, 'VaccineDelete'])->name('admin.vaccine.delete');
 
 
+    ////Property Operation Routes Center////
+    Route::get('/admin/center_list/{division}', [AdminController::class, 'CenterList'])->name('admin.center_list');
+
+    Route::get('/admin/center-create', [AdminController::class, 'CenterCreateView'])->name('admin.center.create');
+
+    Route::post('/admin/center-create', [AdminController::class, 'CenterCreatePost'])->name('admin.center.create.post');
+
+    Route::get('/admin/center-edit/{id}', [AdminController::class, 'CenterEditView'])->name('admin.center.edit');
+
+    Route::post('/admin/center-edit', [AdminController::class, 'CenterEditPost'])->name('admin.center.edit.post');
+
+    Route::get('/admin/center-delete/{id}', [AdminController::class, 'CenterDelete'])->name('admin.center.delete');
+
+
+
     ////Property Operation Routes Vaccination Status Dose////
     Route::get('/admin/vaccination-status_list', [AdminController::class, 'VaccinationStatusList'])->name('admin.vaccinationStatus_list');
 
@@ -129,6 +148,13 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::get('/admin/vaccination-details/{id}', [AdminController::class, 'VaccinationDetailsView'])->name('admin.vaccination.details');
 
+
+    // Notification Meassage ///////
+    Route::get('/admin/message/list', [AdminController::class, 'MessageList'])->name('admin.message.list');
+
+    Route::get('/admin/send-mail-nitification/{email?}', [AdminController::class, 'SendMailNotificationView'])->name('admin.send.email.notification');
+
+    Route::post('/admin/send-mail-nitification', [AdminController::class, 'SendMailNotificationPost'])->name('admin.send.email.notification.post');
 
 });
 ////// End Admin Pages //////
@@ -161,6 +187,9 @@ Route::middleware(['auth', 'role:user'])->group(function(){
 
     Route::get('/user/vaccineWise-registration/{id}', [UserController::class, 'VaccineWiseRegistrationView'])->name('user.vaccineWise.registration');
 
+
+    // Notification Meassage ///////
+    Route::get('/user/message/list', [UserController::class, 'MessageList'])->name('user.message.list');
 
 
 });

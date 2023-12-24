@@ -6,68 +6,49 @@
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+  <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.index') }}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('user.index') }}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
-          <i class="bi bi-grid"></i>
-          <span>Vaccination Status</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
-          <i class="bi bi-grid"></i>
-          <span>Vaccine Registration</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      
-
-      <li class="nav-heading">Property Operation</li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.disease_list')}}">
-          <i class="bi bi-person"></i>
-          <span>Diseases</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.vaccine_list')}}">
-          <i class="bi bi-person"></i>
-          <span>Vaccines</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
-          <i class="bi bi-person"></i>
-          <span>Veccine Centers</span>
-        </a>
-      </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('user.vaccine.registration') }}">
+        <i class="bi bi-grid"></i>
+        <span>Vaccine Registration</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
 
-    </ul>
 
-  </aside>
-  <!-- End Sidebar-->
+    <li class="nav-heading">Other Operation</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{route('user.vaccine_list')}}">
+        <i class="bi bi-person"></i>
+        <span>Vaccines</span>
+      </a>
+    </li>
+
+
+  </ul>
+
+</aside>
+<!-- End Sidebar-->
+
+
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Disease List</h1>
+      <h1>Notifications</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">Diseases</li>
+          <li class="breadcrumb-item active">Notifications</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -101,63 +82,39 @@
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
                 </div> -->
-                <div class="filter">
-                  <a href="{{ route('admin.disease.create') }}" class="btn btn-primary">Add New</a>
-                </div>
+                
 
                 <div class="card-body">
-                  <h5 class="card-title">Diseases <span>| Updated List</span></h5>
+                  <h5 class="card-title">Notifications <span>| Updated List</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
-                        <th scope="col">Disease Name</th>
-                        <th scope="col">Symptoms</th>
-                        <th scope="col">Prevention</th>
-                        <th scope="col">treatment</th>
-                        <th scope="col">description</th>
-                        <th scope="col">Operation</th>
+                        <th scope="col">Client Status</th>
+                        <th scope="col">Email/Phone</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Date</th>
                       </tr>
                     </thead>
                     <tbody>
-                    @if(count($diseases) > 0)
-                      @foreach($diseases as $key => $disease)
-                      <tr>
-                        <th scope="row"><a href="{{ route('admin.disease.info', $disease->id) }}">{{$disease->name}}</a>
-                        </th>
-                        <td>{{ $disease->symptoms ? substr($disease->symptoms, 0, 80) : 'Not available' }}
-                            @if ($disease->symptoms && strlen($disease->symptoms) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->symptoms, 80) }}</span>
-                            @endif 
-                        </td>
-                        <td>{{ $disease->prevention ? substr($disease->prevention, 0, 80) : 'Not available' }}
-                            @if ($disease->prevention && strlen($disease->prevention) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->prevention, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->treatment ? substr($disease->treatment, 0, 80) : 'Not available' }}
-                            @if ($disease->treatment && strlen($disease->treatment) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->treatment, 80) }}</span>
-                            @endif
-                        </td>
-                        <td>{{ $disease->description ? substr($disease->description, 0, 80) : 'Not available' }}
-                            @if ($disease->description && strlen($disease->description) > 80)
-                                <span>....</span>
-                                <span style="display: none;">{{ substr($disease->description, 80) }}</span>
-                            @endif
-                        </td>
+                    @if(count($messages) > 0)
+                      @foreach($messages as $key => $message)
+                      <tr class="{{ ($message->status === 'unseen') ? 'table-primary' : '' }}">
+                        <td>{{ $message->fromUser != null ? 'Registered User' : 'Unregistered User' }}</td>
+                        <td>{{ $message->email ?? 'Email not available' }} </br> {{ $message->phone ?? 'Phone not available' }}</td>
                         <td>
-                          <a href="{{ route('admin.disease.edit', $disease->id) }}" class="btn btn-primary btn-sm">Edit</a> 
-                          <a href="{{ route('admin.disease.delete', $disease->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                          
+                          @if ($message->status === 'unseen')
+                            <b>{{$message->message ?? 'Not available'}}</b>
+                          @else
+                            {{$message->message ?? 'Not available'}}
+                          @endif
+                        </td>
+                        <td>{{ $message->created_at }} </br> {{ $message->deliver_time }}</td>
                       </tr>
                       @endforeach
                     @else
                         <tr>
-                        <td colspan="6">No disease available.</td>
+                        <td colspan="6">No notification available.</td>
                       </tr>
                     @endif
 

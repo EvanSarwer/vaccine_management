@@ -15,6 +15,7 @@ use Illuminate\Validation\Rules\Password;
 use stdClass;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use App\Models\Notification;
 
 class UserController extends Controller
 {
@@ -46,6 +47,7 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|min:4|unique:users,username,'.$user_id,
             'email' => 'required|min:6|unique:users,email,'.$user_id,
+            'dob' => 'required|date',
             'phone' => 'required|min:11',
             'address' => 'required',
         ]);
@@ -53,6 +55,7 @@ class UserController extends Controller
         $userData = User::find($user_id);
         $userData->username = $request->username;
         $userData->email = $request->email;
+        $userData->dob = $request->dob;
         $userData->phone = $request->phone;
         $userData->address = $request->address;
 
@@ -322,6 +325,20 @@ class UserController extends Controller
     public function VaccineWiseRegistrationView($id){
         $vaccine = Vaccine::findOrFail($id);
         return view('admin_user.user.vaccineWise_registration',compact('vaccine'));
+    }
+
+
+
+    // All Notification Message ///
+    public function MessageList(){
+        $user_id = Auth::user()->id;
+        $messages = Notification::where('user_id',$user_id)->where('type','message')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->get();
+        foreach($messages as $message){
+            $message->fromUser = User::Where('email',$message->email)->first();
+            $message->deliver_time = Carbon::parse($message->created_at)->diffForHumans();
+
+        }
+        return view('admin_user.user.message_list',compact('messages'));
     }
 
 

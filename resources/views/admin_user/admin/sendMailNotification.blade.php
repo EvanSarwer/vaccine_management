@@ -7,7 +7,7 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('admin.index') }}">
+      <a class="nav-link" href="{{ route('admin.index') }}">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -27,12 +27,12 @@
       </a>
     </li><!-- End Dashboard Nav -->
 
-
+    
 
     <li class="nav-heading">Property Operation</li>
 
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('admin.disease_list') }}">
+      <a class="nav-link collapsed" href="{{ route('admin.disease_list') }}">
         <i class="bi bi-person"></i>
         <span>Diseases</span>
       </a>
@@ -66,12 +66,11 @@
 
     
     <div class="pagetitle">
-        <h1>Disease</h1>
+        <h1>Send Mail -Notification</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Add New Disease</li>
+            <li class="breadcrumb-item">Notification</li>
           </ol>
         </nav>
       </div><!-- End Page Title -->
@@ -84,54 +83,35 @@
   
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Add New Disease Form</h5>
+                <h5 class="card-title">Send Reply Mail -Notice</h5>
   
                 <!-- Vertical Form -->
-                <form method="POST" action="{{ route('admin.disease.create.post') }}" class="row g-3">
+                <form method="POST" action="{{ route('admin.send.email.notification.post') }}" class="row g-3">
                   @csrf 
   
-                  {{-- <div class="col-12">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}">
-                    @error('name')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </div> --}}
+                  
                   <div class="col-12">
-                    <label for="name" class="form-label">Disease Name<span class="text-danger">*</span></label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}">
-                    @error('name')
+                    <label for="subject" class="form-label">Main Subject<span class="text-danger">*</span></label>
+                    <input type="text" name="subject" class="form-control @error('subject') is-invalid @enderror" id="subject" value="{{ old('subject') }}">
+                    @error('subject')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
                   <div class="col-12">
-                    <label for="symptoms" class="form-label">Symptoms</label>
-                    <textarea name="symptoms" class="form-control @error('symptoms') is-invalid @enderror" id="symptoms" style="height: 100px">{{ old('symptoms') }}</textarea>
-                    @error('symptoms')
+                    <label for="email" class="form-label">Receiver Email<span class="text-danger">*</span></label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ (old('email')) ? old('email') : $email }}">
+                    @error('email')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
                   <div class="col-12">
-                    <label for="prevention" class="form-label">Prevention</label>
-                    <textarea name="prevention" class="form-control @error('prevention') is-invalid @enderror" id="prevention" style="height: 100px">{{ old('prevention') }}</textarea>
-                    @error('prevention')
+                    <label for="message" class="form-label">Notice Message</label>
+                    <textarea name="message" class="form-control @error('message') is-invalid @enderror" id="message" style="height: 100px">{{ old('message') }}</textarea>
+                    @error('message')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
-                  <div class="col-12">
-                    <label for="treatment" class="form-label">Treatment</label>
-                    <textarea name="treatment" class="form-control @error('treatment') is-invalid @enderror" id="treatment" style="height: 100px">{{ old('treatment') }}</textarea>
-                    @error('treatment')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </div>
-                  <div class="col-12">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" style="height: 100px">{{ old('description') }}</textarea>
-                    @error('description')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </div>
+                  
                   
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>

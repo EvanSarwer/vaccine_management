@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminSendMail;
 use App\Models\Center;
 use App\Models\Disease;
 use App\Models\User;
@@ -17,6 +18,7 @@ use Carbon\Carbon;
 use stdClass;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use App\Models\Notification;
 
 class AdminController extends Controller
 {
@@ -53,6 +55,7 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|min:4|unique:users,username,'.$user_id,
             'email' => 'required|min:6|unique:users,email,'.$user_id,
+            'dob' => 'required|date',
             'phone' => 'required|min:11',
             'address' => 'required',
         ]);
@@ -61,6 +64,7 @@ class AdminController extends Controller
         $userData->username = $request->username;
         $userData->email = $request->email;
         $userData->phone = $request->phone;
+        $userData->dob = $request->dob;
         $userData->address = $request->address;
 
         if($request->hasfile('photo')){
@@ -148,6 +152,7 @@ class AdminController extends Controller
             ->numbers()
             ->symbols()
             ->uncompromised()],
+            'dob' => 'required|date',
             'phone' => 'required|min:10',
         ]);
 
@@ -156,6 +161,7 @@ class AdminController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->dob = $request->dob;
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->save();
@@ -187,6 +193,7 @@ class AdminController extends Controller
             ->numbers()
             ->symbols()
             ->uncompromised()],
+            'dob' => 'required|date',
             'phone' => 'required|min:10',
         ]);
 
@@ -197,6 +204,7 @@ class AdminController extends Controller
         if($request->password){
             $user->password = Hash::make($request->password);
         }
+        $user->dob = $request->dob;
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->save();
@@ -526,6 +534,97 @@ class AdminController extends Controller
         );
 
         return redirect('/admin/vaccine_list')->with($notification);
+    }
+
+
+
+
+    //////////// Center Operation ////////////////
+
+    public function CenterList($division){
+        $centers = Center::where('division',$division)->get();
+        return view('admin_user.admin.center.center_list',compact('centers','division'));
+    }
+
+
+    public function CenterCreateView(){
+        return view('admin_user.admin.center.center_create');
+    }
+
+    public function CenterCreatePost(Request $request){
+        // Validation
+        $request->validate([
+            'hospital' => 'required|unique:centers,hospital|min:3',
+            'division' => 'required',
+            'address' => 'required',
+            'location_link' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $center = new Center();
+
+        $center->hospital = $request->hospital;
+        $center->division = $request->division;
+        $center->address = $request->address;
+        $center->location_link = $request->location_link;
+        $center->phone = $request->phone;
+        $center->email = $request->email;
+        $center->save();
+
+        $notification = array(
+            'message' => 'New Center Added Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/center_list/Dhaka')->with($notification);
+
+    }
+
+    public function CenterEditView($id){
+        $center = Center::findOrFail($id);
+        return view('admin_user.admin.center.center_edit',compact('center'));
+    }
+
+    public function CenterEditPost(Request $request){
+        // Validation
+        $request->validate([
+            'id' => 'required',
+            'hospital' => 'required|min:3|unique:centers,hospital,'.$request->id,
+            'division' => 'required',
+            'address' => 'required',
+            'location_link' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $center = Center::findOrFail($request->id);
+
+        $center->hospital = $request->hospital;
+        $center->division = $request->division;
+        $center->address = $request->address;
+        $center->location_link = $request->location_link;
+        $center->phone = $request->phone;
+        $center->email = $request->email;
+        $center->save();
+
+        $notification = array(
+            'message' => 'Center Info Updated Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/center_list/Dhaka')->with($notification);
+
+    }
+
+    public function CenterDelete($id){
+        $center = Center::findOrFail($id);
+        $center->delete();
+
+        $notification = array(
+            'message' => 'Center Deleted Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/center_list/Dhaka')->with($notification);
     }
 
 
@@ -890,6 +989,20 @@ class AdminController extends Controller
 
 
 
+    // All Notification Message ///
+    public function MessageList(){
+        $user_id = Auth::user()->id;
+        $messages = Notification::where('user_id',$user_id)->where('type','message')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->get();
+        foreach($messages as $message){
+            $message->fromUser = User::Where('email',$message->email)->first();
+            $message->deliver_time = Carbon::parse($message->created_at)->diffForHumans();
+
+        }
+        return view('admin_user.admin.message_list',compact('messages'));
+    }
+
+
+
     ///////Send Mail/////////
 
     public function SendMail(){
@@ -902,6 +1015,47 @@ class AdminController extends Controller
         Mail::to('evansarwer1@gmail.com')->send(new SendMail($mailData));
 
         dd("Mail Send Successfully");
+    }
+
+    public function SendMailNotificationView($email = null){
+        return view('admin_user.admin.sendMailNotification',compact('email'));
+    }
+
+    public function SendMailNotificationPost(Request $request){
+        $request->validate([
+            'email' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+
+        $user = User::where('email',$request->email)->first();
+        if($user){
+            $notification = new Notification();
+            $notification->user_id = $user->id;
+            $notification->email = Auth::user()->email;
+            $notification->message = $request->message;
+            $notification->type = 'message';
+            $notification->status = 'unseen';
+            $notification->created_at = date('Y-m-d H:i:s');
+            $notification->save();
+            
+        }
+
+        $mailData = [
+            'subject' => $request->subject,
+            'title' => $request->subject,
+            'user_info' => $user ? $user->username : null,
+            'message' => $request->message
+        ];
+
+        Mail::to($request->email)->send(new AdminSendMail($mailData));
+
+        $notification = array(
+            'message' => 'Mail Send Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/message/list')->with($notification);
     }
 
 
