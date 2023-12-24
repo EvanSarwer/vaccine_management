@@ -100,16 +100,35 @@
                     <div class="col-5">
                         <h6>Name: {{ $vaccine_take->vaccine->name }}</h6>
                         <h6>Required Doses: {{ $vaccine_take->vaccine->doses_required }}</h6>
-                        <h6>Completed Doses: {{ $vaccine_take->completed_doses }}</h6>
+                        
                     </div>
                     <div class="col-2">
                     </div>
                     <div class="col-5">
-                        <h6>Center: {{ $vaccine_take->center->hospital}}</h6>
-                        <h6>Address: {{ $vaccine_take->center->address ?? 'N/A' }}</h6>
-                        <h6>Phone: {{ $vaccine_take->center->phone ?? 'N/A' }}</h6>
-                        <h6>Email: {{ $vaccine_take->center->email ?? 'N/A' }}</h6>
+                        <h6>Disease: {{ $vaccine_take->vaccine->disease->name}}</h6>
+                        <h6>Completed Doses: {{ $vaccine_take->completed_doses }}</h6>
                     </div>
+                  </div>
+
+
+                  <br/>
+                <br/>
+                  <div class="col-12 row">
+                    <h5 class="text-primary">Center Details:</h5>
+
+                    <div class="col-5">
+                      <h6>Center: <b>{{ $vaccine_take->center->hospital}}</b></h6>
+                      <h6>Address: {{ $vaccine_take->center->address ?? 'N/A' }}</h6>
+                      <h6>Phone: {{ $vaccine_take->center->phone ?? 'N/A' }}</h6>
+                      <h6>Email: {{ $vaccine_take->center->email ?? 'N/A' }}</h6>
+                    </div>
+
+                    <div class="col-7">
+                      <div style="min-width:100%; max-width: 100%; overflow: hidden;">
+                        {!! $vaccine_take->center->location_link !!}
+                      </div>
+                    </div>
+                    
                   </div>
 
                   <br/>
