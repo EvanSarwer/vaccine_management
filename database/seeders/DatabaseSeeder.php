@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             VaccineTakesTableSeeder::class,
             CentersTableSeeder::class,
             NotificationTableSeeder::class,
+            SliderImageTableSeeder::class,
+            PagePropertyTableSeeder::class,
         ]);
         \App\Models\User::factory(400)->create();
 

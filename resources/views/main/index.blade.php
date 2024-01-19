@@ -51,18 +51,28 @@
                 <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_meet_bd.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
+                            <img class="w-100" src="{{ (!empty($page_property_view->slider_images[0]->image)) ? url('page_assets/img/'.$page_property_view->slider_images[0]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
                         </div>
 
-                        <div class="carousel-item">
-                            <img class="w-100" src="{{ asset('page_assets/img/home_hero_learn_bd.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
-                            
-                        </div>
+                        @if(isset($page_property_view->slider_images) && count($page_property_view->slider_images) > 1)
 
-                        <div class="carousel-item">
+                            @for ($i = 1; $i < count($page_property_view->slider_images); $i++)
+
+                            <div class="carousel-item">
+                                <img class="w-100" src="{{ (!empty($page_property_view->slider_images[$i]->image)) ? url('page_assets/img/'.$page_property_view->slider_images[$i]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
+                              
+                            </div>
+
+
+                            @endfor
+            
+                        @endif
+
+                        {{-- <div class="carousel-item">
                             <img class="w-100" src="{{ asset('page_assets/img/home_hero_track_bd.png') }}" alt="Image" style="max-width: 100%; max-height: 630px; object-fit: fill;">
                             
-                        </div>
+                        </div> --}}
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
                         data-bs-slide="prev">

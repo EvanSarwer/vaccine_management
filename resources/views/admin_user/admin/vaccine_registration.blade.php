@@ -15,6 +15,13 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.pageProperty.edit') }}">
+          <i class="bi bi-wrench-adjustable-circle"></i>
+          <span>Page-Property Update</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('admin.vaccinationStatus_list') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccination Status</span>

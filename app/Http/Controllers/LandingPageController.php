@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disease;
+use App\Models\SliderImage;
 use App\Models\User;
 use App\Models\Vaccine;
 use App\Models\VaccineTake;
@@ -14,7 +15,9 @@ class LandingPageController extends Controller
 
     public function index(){
         $user_count = User::where('role','user')->count();
-        return view('main.index',compact('user_count'));
+        $page_property_view = new \stdClass();
+        $page_property_view->slider_images = SliderImage::all();
+        return view('main.index',compact('user_count','page_property_view'));
     }
 
     public function myVaccine(){

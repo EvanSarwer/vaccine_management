@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PropertyOperationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -155,6 +156,14 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/send-mail-nitification/{email?}', [AdminController::class, 'SendMailNotificationView'])->name('admin.send.email.notification');
 
     Route::post('/admin/send-mail-nitification', [AdminController::class, 'SendMailNotificationPost'])->name('admin.send.email.notification.post');
+
+
+    // Start Edit Page Property Operations
+    Route::get('/admin/pageProperty/edit', [PropertyOperationController::class, 'PagePropertyEditView'])->name('admin.pageProperty.edit');
+
+    Route::post('/admin/sliderImage/add', [PropertyOperationController::class, 'AddSliderImage'])->name('admin.sliderImage.add.post');
+    Route::get('/admin/sliderImage/delete/{id}', [PropertyOperationController::class, 'SliderImageDelete'])->name('admin.sliderImage.delete');
+
 
 });
 ////// End Admin Pages //////
