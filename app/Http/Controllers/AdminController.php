@@ -740,7 +740,8 @@ class AdminController extends Controller
     public function VaccineRegistrationView(){
         $users = User::all();
         $vaccines = Vaccine::all();
-        return view('admin_user.admin.vaccine_registration',compact('vaccines','users'));
+        $division = 'Dhaka';
+        return view('admin_user.admin.vaccine_registration',compact('vaccines','users','division'));
     }
 
     public function VaccineRegistrationPost(Request $request){
@@ -772,10 +773,14 @@ class AdminController extends Controller
         
                 return redirect('/admin/vaccination-status_list')->with($notification);
             }else{
-                $booked_vaccine = VaccineTake::where('vaccine_id',$request->vaccine_id)->where('center_id',$request->center_id)->sum(function ($vaccineTake) use ($vaccine) {
+                $booked_vaccine = VaccineTake::where('vaccine_id', $request->vaccine_id)
+                    ->where('center_id', $request->center_id)
+                    ->get(); // Retrieve the records
+
+                $total_booked_vaccine = $booked_vaccine->sum(function ($vaccineTake) use ($vaccine) {
                     return $vaccine->doses_required - $vaccineTake->completed_doses;
                 });
-                if($vaccine_stock_check->available <= $booked_vaccine){
+                if($vaccine_stock_check->available <= $total_booked_vaccine){
                     $notification = array(
                         'message' => 'Vaccine is not available, Try again later',
                         'alert-type' => 'error',
@@ -807,7 +812,7 @@ class AdminController extends Controller
 
                 if(($vaccine_take_history->vaccine->doses_required - $vaccine_take_history->completed_doses) > 0){
                     $dose_date_details = json_decode($vaccine_take_history->dose_date_details);
-                    $last_dose_date = $dose_date_details[($vaccine_take_history->vaccine->doses_required - 1)]['dose_date'];
+                    $last_dose_date = $dose_date_details[($vaccine_take_history->vaccine->doses_required - 1)]->dose_date;
                     if($last_dose_date >= Carbon::now()->format('Y-m-d')){
                         $notification = array(
                             'message' => 'User is not eligible for this vaccine yet',
@@ -833,7 +838,7 @@ class AdminController extends Controller
         // Create an array to store dose details
         $doseDetails = [];
         $nextDoseDate = Carbon::parse($vaccine_take->order_date)->addDays(14);
-        for ($doseNumber = 1; $doseNumber <= $request->doses_required; $doseNumber++) {
+        for ($doseNumber = 1; $doseNumber <= $vaccine->doses_required; $doseNumber++) {
             // Add dose details to the array
             $doseDetails[] = [
                 'dose_number' => $doseNumber,
@@ -856,7 +861,6 @@ class AdminController extends Controller
         }
         // Convert the array to JSON and store in the database
         $vaccine_take->dose_date_details = json_encode($doseDetails);
-        
         $vaccine_take->save();
 
         $mailData = [

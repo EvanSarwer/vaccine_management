@@ -37,7 +37,7 @@ Route::get('/signup', [LandingPageController::class, 'signup'])->name('signup');
 Route::get('/sendmail', [AdminController::class, 'SendMail'])->name('sendmail');
 
 ////// End Main Landing Page Routes
-
+Route::get('/division/to/centers/{division}', [CommonController::class, 'DivisionToCenter'])->name('division.to.center');
 
 
 Route::middleware('auth')->group(function () {

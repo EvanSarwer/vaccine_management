@@ -55,7 +55,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
+        <a class="nav-link collapsed" href="{{route('admin.center_list')}}">
           <i class="bi bi-person"></i>
           <span>Veccine Centers</span>
         </a>
