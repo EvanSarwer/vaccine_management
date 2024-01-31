@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
 
 class RegisteredUserController extends Controller
 {
@@ -34,6 +35,15 @@ class RegisteredUserController extends Controller
         $request->validate([
             'username' => ['required', 'string', 'min:4', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'nid' => [
+                'required',
+                'string',
+                'min:6',
+                'max:15',
+                Rule::unique('users', 'nid')->where(function ($query) {
+                    return $query->where('role', 'user');
+                }),
+            ],
             'password' => ['required', Password::min(8)
             ->letters()
             ->mixedCase()
@@ -48,6 +58,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
+            'nid' => $request->nid,
             'password' => Hash::make($request->password),
             'dob' => $request->dob,
             'phone' => $request->phone,

@@ -29,7 +29,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
         </a>

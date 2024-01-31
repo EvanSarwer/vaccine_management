@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use App\Models\Disease;
 use App\Models\SliderImage;
 use App\Models\User;
@@ -15,9 +16,8 @@ class LandingPageController extends Controller
 
     public function index(){
         $user_count = User::where('role','user')->count();
-        $page_property_view = new \stdClass();
-        $page_property_view->slider_images = SliderImage::all();
-        return view('main.index',compact('user_count','page_property_view'));
+        
+        return view('main.index',compact('user_count'));
     }
 
     public function myVaccine(){
@@ -111,6 +111,12 @@ class LandingPageController extends Controller
 
         }
         return view('main.vaccination',compact('dhaka_vaccine_list','chattogram_vaccine_list','rajshahi_vaccine_list','mymensingh_vaccine_list','rangpur_vaccine_list','sylhet_vaccine_list','barishal_vaccine_list','khulna_vaccine_list'));
+    }
+
+    public function blogs(){
+        $blog_posts = BlogPost::all();
+
+        return view('main.blogs',compact('blog_posts'));
     }
 
     public function signin(){

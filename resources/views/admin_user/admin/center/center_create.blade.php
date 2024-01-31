@@ -29,7 +29,7 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+      <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
         <i class="bi bi-grid"></i>
         <span>Vaccine Registration</span>
       </a>
@@ -170,12 +170,12 @@
 
 
                     <div class="row mb-3">
-                      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email<span class="text-danger">*</span></label>
                       <div class="col-md-8 col-lg-9">
                         <div class="row g-2">
 
                           <div class="col-md-6">
-                            <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}" >
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}" >
                             @error('email')
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -183,6 +183,29 @@
                         </div>
                       </div>
                     </div>
+
+
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newPassword" type="password" class="form-control @error('newPassword') is-invalid @enderror" id="newPassword">
+                        @error('newPassword')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="reNewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="reNewPassword" type="password" class="form-control @error('reNewPassword') is-invalid @enderror" id="renewPassword">
+                        @error('reNewPassword')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                    </div>
+
+
 
                     <div class="row mb-3">
                       <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone<span class="text-danger">*</span></label>

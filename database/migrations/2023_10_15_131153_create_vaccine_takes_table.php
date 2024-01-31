@@ -18,9 +18,16 @@ return new class extends Migration
             $table->string('division');
             $table->integer('center_id');
             $table->date('order_date');
-            $table->date('first_dose_date');
+            $table->text('dose_date_details');
             $table->integer('completed_doses')->default(0);
             $table->double('total_cost')->nullable();
+            $table->string('patient_photo')->nullable();
+            $table->string('patient_name')->nullable();
+            $table->string('patient_email')->nullable();
+            $table->string('patient_phone')->nullable();
+            $table->string('patient_address')->nullable();
+            $table->date('patient_dob')->nullable();
+            $table->integer('patient_nid')->nullable();
             $table->timestamps();
         });
     }

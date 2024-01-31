@@ -18,7 +18,7 @@
                 <a href="{{route('myVaccine')}}" class="nav-item nav-link">My Vaccine</a>
                 <a href="{{route('conditions')}}" class="nav-item nav-link">Conditions</a>
                 <a href="{{route('vaccination')}}" class="nav-item nav-link active">Vaccination</a>
-                <a href="contact.html" class="nav-item nav-link">Blogs</a>
+                <a href="{{route('blogs')}}" class="nav-item nav-link">Blogs</a>
             </div>
             <div class="px-2"><button onclick="window.location.href='{{route('signin')}}'" class="nav-item btn btn-outline-dark ">Sign In</button></div>
             <a href="{{route('signup')}}" class="btn btn-warning py-4 px-lg-5 d-none d-lg-block">Join Now!<i class="fa fa-arrow-right ms-3"></i></a>
@@ -57,9 +57,9 @@
                         
                         <div class="ps-4 text-center">
                             
-                            <h4 class="mb-3">Advice and experience</h4>
-                            <p>Tap into the shared knowledge of our community and see what has worked for other members.</p>
-                            <img class="w-100" src="{{ asset('page_assets/img/vaccination1.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                            <h4 class="mb-3">{{ $page_property_view?->vaccination_title1 ?? 'Not Available'}}</h4>
+                            <p>{{  $page_property_view?->vaccination_description1 ?? 'Not Available' }}</p>
+                            <img class="w-100" src="{{ (!empty($page_property_view->vaccination_image1)) ? url('page_assets/img/'.$page_property_view->vaccination_image1) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                         </div>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
                         
                         <div class="ps-4 text-center">
                             
-                            <h4 class="mb-3">Share and compare</h4>
-                            <p>See how your experience aligns with the community and if another treatment can help.</p>
-                            <img class="w-100" src="{{ asset('page_assets/img/vaccination2.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                            <h4 class="mb-3">{{ $page_property_view?->vaccination_title2 ?? 'Not Available'}}</h4>
+                            <p>{{  $page_property_view?->vaccination_description2 ?? 'Not Available' }}</p>
+                            <img class="w-100" src="{{ (!empty($page_property_view->vaccination_image2)) ? url('page_assets/img/'.$page_property_view->vaccination_image2) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
 
                         </div>
                     </div>
@@ -80,9 +80,9 @@
                         
                         <div class="ps-4 text-center">
                             
-                            <h4 class="mb-3">Trend data</h4>
-                            <p>Understand what to expect when starting a new treatment.</p>
-                            <img class="w-100" src="{{ asset('page_assets/img/vaccination3.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                            <h4 class="mb-3">{{ $page_property_view?->vaccination_title3 ?? 'Not Available'}}</h4>
+                            <p>{{  $page_property_view?->vaccination_description3 ?? 'Not Available' }}</p>
+                            <img class="w-100" src="{{ (!empty($page_property_view->vaccination_image3)) ? url('page_assets/img/'.$page_property_view->vaccination_image2) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
 
                         </div>
                     </div>

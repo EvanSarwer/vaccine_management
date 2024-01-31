@@ -30,7 +30,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
         </a>
@@ -141,6 +141,7 @@
                         <th scope="col">Address</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
+                        <th scope="col">Vaccine Stock</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -153,6 +154,9 @@
                         <td>{{$center->address}}</td>
                         <td>{{$center->email ?? 'Not available'}}</td>
                         <td>{{$center->phone ?? 'Not available'}}</td>
+                        <td>
+                          <a href="{{ route('admin.vaccine.stock.list', $center->id) }}" class="btn btn-info btn-sm">Stock</a>
+                        </td>
                         <td>
                           <a href="{{ route('admin.center.edit', $center->id) }}" class="btn btn-primary btn-sm">Edit</a> 
                           <a href="{{ route('admin.center.delete', $center->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>

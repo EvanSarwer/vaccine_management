@@ -35,6 +35,13 @@
                           <input type="email" name="email" class="form-control" id="yourEmail" value="{{old('email')}}" required>
                           <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                         </div>
+
+                        <div class="col-12">
+                          <label for="nid" class="form-label">Your NID<span class="text-danger">*</span></label>
+                          <input type="text" name="nid" class="form-control" id="nid" value="{{old('nid')}}" required>
+                          <div class="invalid-feedback">Please, enter your nid number!</div>
+                          <x-input-error :messages="$errors->get('nid')" class="mt-2" />
+                        </div>
     
                         <div class="col-12">
                           <label for="yourPassword" class="form-label">Password<span class="text-danger">*</span></label>

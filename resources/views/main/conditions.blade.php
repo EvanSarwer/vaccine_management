@@ -18,7 +18,7 @@
                 <a href="{{route('myVaccine')}}" class="nav-item nav-link">My Vaccine</a>
                 <a href="{{route('conditions')}}" class="nav-item nav-link active">Conditions</a>
                 <a href="{{route('vaccination')}}" class="nav-item nav-link">Vaccination</a>
-                <a href="contact.html" class="nav-item nav-link">Blogs</a>
+                <a href="{{route('blogs')}}" class="nav-item nav-link">Blogs</a>
             </div>
             <div class="px-2"><button onclick="window.location.href='{{route('signin')}}'" class="nav-item btn btn-outline-dark ">Sign In</button></div>
             <a href="{{route('signup')}}" class="btn btn-warning py-4 px-lg-5 d-none d-lg-block">Join Now!<i class="fa fa-arrow-right ms-3"></i></a>

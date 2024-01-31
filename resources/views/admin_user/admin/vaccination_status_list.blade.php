@@ -30,7 +30,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
         </a>
@@ -109,7 +109,7 @@
                   </ul>
                 </div> -->
                 <div class="filter">
-                  <a href="{{ route('admin.vaccine.registration') }}" class="btn btn-primary">Vaccine Registration</a>
+                  <a href="{{ route('admin.vaccine.registration', 'Dhaka') }}" class="btn btn-primary">Vaccine Registration</a>
                 </div>
 
                 <div class="card-body">

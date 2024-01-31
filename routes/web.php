@@ -30,6 +30,7 @@ Route::get('/', [LandingPageController::class, 'index'])->name('index');
 Route::get('/my-vaccine', [LandingPageController::class, 'myVaccine'])->name('myVaccine');
 Route::get('/conditions', [LandingPageController::class, 'conditions'])->name('conditions');
 Route::get('/vaccination', [LandingPageController::class, 'vaccination'])->name('vaccination');
+Route::get('/blogs', [LandingPageController::class, 'blogs'])->name('blogs');
 Route::get('/signin', [LandingPageController::class, 'signin'])->name('signin');
 Route::get('/signup', [LandingPageController::class, 'signup'])->name('signup');
 
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/message/seen', [CommonController::class, 'MessageSeen'])->name('message.seen');
     Route::get('/message/list', [CommonController::class, 'MessageList'])->name('message.list');
+
+    Route::get('/division/to/centers/{division}', [CommonController::class, 'DivisionToCenter'])->name('division.to.center');
 
 
 });
@@ -119,6 +122,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/vaccine-delete/{id}', [AdminController::class, 'VaccineDelete'])->name('admin.vaccine.delete');
 
 
+    
     ////Property Operation Routes Center////
     Route::get('/admin/center_list/{division}', [AdminController::class, 'CenterList'])->name('admin.center_list');
 
@@ -132,6 +136,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::get('/admin/center-delete/{id}', [AdminController::class, 'CenterDelete'])->name('admin.center.delete');
 
+    //// Center wise Vaccine Stock ////
+    Route::get('/admin/vaccine-stock/list/{center_id}', [AdminController::class, 'VaccineStockList'])->name('admin.vaccine.stock.list');
+
+    Route::post('/admin/vaccine-stock/add', [AdminController::class, 'VaccineStockAdd'])->name('admin.vaccine.stock.add.post');
 
 
     ////Property Operation Routes Vaccination Status Dose////
@@ -164,6 +172,13 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::post('/admin/sliderImage/add', [PropertyOperationController::class, 'AddSliderImage'])->name('admin.sliderImage.add.post');
     Route::get('/admin/sliderImage/delete/{id}', [PropertyOperationController::class, 'SliderImageDelete'])->name('admin.sliderImage.delete');
 
+    Route::post('/admin/pageProperty/edit', [PropertyOperationController::class, 'PagePropertyEditPost'])->name('admin.pageProperty.edit.post');
+    Route::post('/admin/pageProperty/first-tab/edit', [PropertyOperationController::class, 'PagePropertyFirstTabEditPost'])->name('admin.pageProperty.first-tab.edit.post');
+    Route::post('/admin/pageProperty/second-tab/edit', [PropertyOperationController::class, 'PagePropertySecondTabEditPost'])->name('admin.pageProperty.second-tab.edit.post');
+    Route::post('/admin/pageProperty/third-tab/edit', [PropertyOperationController::class, 'PagePropertyThirdTabEditPost'])->name('admin.pageProperty.third-tab.edit.post');
+
+    Route::post('/admin/blogPost/add', [PropertyOperationController::class, 'AddBlogPost'])->name('admin.blogPost.add.post');
+    Route::get('/admin/blogPost/delete/{id}', [PropertyOperationController::class, 'BlogPostDelete'])->name('admin.blogPost.delete');
 
 });
 ////// End Admin Pages //////

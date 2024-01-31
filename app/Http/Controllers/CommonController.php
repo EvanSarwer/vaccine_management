@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Center;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\VaccineTake;
@@ -183,6 +184,12 @@ class CommonController extends Controller
             }
         }
         return back();
+    }
+
+
+    public function DivisionToCenter($division){
+        $centers = Center::where('division',$division)->get();
+        return response()->json($centers);
     }
 
     

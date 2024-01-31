@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             DiseasesTableSeeder::class,
             VeccinesTableSeeder::class,
-            VaccineTakesTableSeeder::class,
+            //VaccineTakesTableSeeder::class,
             CentersTableSeeder::class,
             NotificationTableSeeder::class,
             SliderImageTableSeeder::class,
             PagePropertyTableSeeder::class,
+            PagePropertyTabTableSeeder::class,
+            BlogPostTableSeeder::class,
+            VaccineStocksTableSeeder::class,
         ]);
         \App\Models\User::factory(400)->create();
 

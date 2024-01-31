@@ -28,7 +28,7 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
+      <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
         <i class="bi bi-grid"></i>
         <span>Vaccine Registration</span>
       </a>
@@ -126,13 +126,18 @@
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
                   </div>
-                  <div class="col-12">
-                    <label for="dob" class="form-label">Date Of Birth<span class="text-danger">*</span></label>
-                    <input type="date" name="dob" class="form-control @error('dob') is-invalid @enderror" id="dob" value="{{ (old('dob')) ? old('dob') : $app_user->dob }}">
-                    @error('dob')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                  </div>
+
+                  @if($app_user->role != 'center')
+                    <div class="col-12">
+                      <label for="dob" class="form-label">Date Of Birth<span class="text-danger">*</span></label>
+                      <input type="date" name="dob" class="form-control @error('dob') is-invalid @enderror" id="dob" value="{{ (old('dob')) ? old('dob') : $app_user->dob }}">
+                      @error('dob')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                    </div>
+                  @endif
+
+
                   <div class="col-12">
                     <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
                     <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ (old('phone')) ? old('phone') : $app_user->phone }}">

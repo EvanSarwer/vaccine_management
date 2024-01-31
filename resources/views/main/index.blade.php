@@ -20,7 +20,7 @@
                 <a href="{{route('myVaccine')}}" class="nav-item nav-link">My Vaccine</a>
                 <a href="{{route('conditions')}}" class="nav-item nav-link">Conditions</a>
                 <a href="{{route('vaccination')}}" class="nav-item nav-link">Vaccination</a>
-                <a href="contact.html" class="nav-item nav-link">Blogs</a>
+                <a href="{{route('blogs')}}" class="nav-item nav-link">Blogs</a>
             </div>
             <div class="px-2"><button onclick="window.location.href='{{route('signin')}}'" class="nav-item btn btn-outline-dark ">Sign In</button></div>
             <a href="{{route('signup')}}" class="btn btn-warning py-4 px-lg-5 d-none d-lg-block">Join Now!<i class="fa fa-arrow-right ms-3"></i></a>
@@ -37,9 +37,9 @@
 
             <div class="text-center text-lg-start pt-5 m-5">
                 
-                <h1 class="display-3 text-black mb-4 pb-3 animated slideInDown">Striving for a Healthier Bangladesh - Vaccine Management Initiative</h1>
+                <h1 class="display-3 text-black mb-4 pb-3 animated slideInDown">{{$page_property_view?->title ?? 'No Title Available'}}</h1>
                 <div class="pr-5">
-                    <h4 class="text-black mb-4 pb-3 animated slideInDown">Facilitating Health and Well-being: Navigating Bangladesh's Vaccine Landscape with Ease and Efficiency.</h4>
+                    <h4 class="text-black mb-4 pb-3 animated slideInDown">{{$page_property_view?->subtitle ?? 'No Sub-Title Available'}}</h4>
                 </div>
             </div>
             
@@ -216,13 +216,13 @@
                 <h3>I want to...</h3>
               </li>
             <li class="nav-item mx-3">
-              <a class="nav-link active" href="#day-1" role="tab" data-bs-toggle="tab"><i class="fa fa-comment me-1"></i>Meet others like me</a>
+              <a class="nav-link active" href="#day-1" role="tab" data-bs-toggle="tab"><i class="fa fa-comment me-1"></i>{{$page_property_view?->first_tab[0]->tab_name ?? 'Not Available'}}</a>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" href="#day-2" role="tab" data-bs-toggle="tab"><i class="fa fa-book-open me-1"></i>Learn about my condition</a>
+              <a class="nav-link" href="#day-2" role="tab" data-bs-toggle="tab"><i class="fa fa-book-open me-1"></i>{{$page_property_view?->second_tab[0]->tab_name ?? 'Not Available'}}</a>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" href="#day-3" role="tab" data-bs-toggle="tab"><i class="fa fa-heartbeat me-1"></i>Track my health</a>
+              <a class="nav-link" href="#day-3" role="tab" data-bs-toggle="tab"><i class="fa fa-heartbeat me-1"></i>{{$page_property_view?->third_tab[0]->tab_name ?? 'Not Available'}}</a>
             </li>
           </ul>
   
@@ -237,28 +237,28 @@
                 <div class="row ">
                     <div class="columns small-24 large-8">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">1</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Share your story</strong>
-                                <div class="description">Introduce yourself to the community. Share as little, or as much, about your health journey and the support you're looking for.</div>
+                                <strong class="header">{{$page_property_view?->first_tab[0]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->first_tab[0]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="columns small-24 large-8 tab-padding">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">2</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Find your community</strong>
-                                <div class="description">We offer 70 communities that cover 2,800 conditions where you can make helpful connections and be part of a safe community.</div>
+                                <strong class="header">{{$page_property_view?->first_tab[1]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->first_tab[1]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="columns small-24 large-8 tab-padding">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">3</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Join the discussion</strong>
-                                <div class="description">Find personalized answers, offer advice and feel supported by people who know what you are going through.</div>
+                                <strong class="header">{{$page_property_view?->first_tab[2]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->first_tab[2]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
@@ -269,13 +269,13 @@
 
                 <div class="row" style="width:1000px;  min-height: 100%;">
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-1-1.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->first_tab[0]->image)) ? url('page_assets/img/'.$page_property_view?->first_tab[0]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-1-2.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->first_tab[1]->image)) ? url('page_assets/img/'.$page_property_view?->first_tab[1]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-1-3.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->first_tab[2]->image)) ? url('page_assets/img/'.$page_property_view?->first_tab[2]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
 
                 </div>
@@ -289,28 +289,28 @@
                 <div class="row ">
                     <div class="columns small-24 large-8">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">1</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Discover the next step in your care</strong>
-                                <div class="description">Explore first-hand treatment reviews from people living with your condition to uncover personalized and effective options.</div>
+                                <strong class="header">{{$page_property_view?->second_tab[0]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->second_tab[0]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="columns small-24 large-8 tab-padding">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">2</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Get insights into your condition</strong>
-                                <div class="description">Ask questions that matter to you – and get “real, lived experiences” that help you move forward.</div>
+                                <strong class="header">{{$page_property_view?->second_tab[1]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->second_tab[1]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="columns small-24 large-8 tab-padding">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">3</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Learn new ways to influence your health outcomes</strong>
-                                <div class="description">Join in conversations about treatments, diagnosis, and recovery journey.</div>
+                                <strong class="header">{{$page_property_view?->second_tab[2]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->second_tab[2]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
@@ -322,13 +322,13 @@
 
                 <div class="row" style="width:1000px;  min-height: 100%;">
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-2-1.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->second_tab[0]->image)) ? url('page_assets/img/'.$page_property_view?->second_tab[0]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-2-2.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->second_tab[1]->image)) ? url('page_assets/img/'.$page_property_view?->second_tab[1]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-2-3.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->second_tab[2]->image)) ? url('page_assets/img/'.$page_property_view?->second_tab[2]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
 
                 </div>
@@ -342,28 +342,28 @@
                 <div class="row ">
                     <div class="columns small-24 large-8">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">1</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Make informed care decisions</strong>
-                                <div class="description">Track your conditions, symptoms and treatment effectiveness in one place so you can see your complete health picture.</div>
+                                <strong class="header">{{$page_property_view?->third_tab[0]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->third_tab[0]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="columns small-24 large-8 tab-padding">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">2</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Take control of your healthcare decision making</strong>
-                                <div class="description">Get personalized education, tools, and motivational nudges that will help you take charge of your health.</div>
+                                <strong class="header">{{$page_property_view?->third_tab[1]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->third_tab[1]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="columns small-24 large-8 tab-padding">
                         <div class="detail-point">
-                            <div class="index mr-3 mr-md-4 meet">3</div>
+                            <div class="index mr-3 mr-md-4 meet"></div><br/>
                             <div class="details mt-2">
-                                <strong class="header">Get the most out of your care team</strong>
-                                <div class="description">Easily share your health data with doctors, caregivers, family or friends to lead to more efficient conversations and effective care plans.</div>
+                                <strong class="header">{{$page_property_view?->third_tab[2]->title ?? 'Not Available'}}</strong>
+                                <div class="description">{{$page_property_view?->third_tab[2]->description ?? 'Not Available'}}</div>
                             </div>
                         </div>
                     </div>
@@ -375,13 +375,13 @@
 
                 <div class="row" style="width:1000px;  min-height: 100%;">
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-3-1.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->third_tab[0]->image)) ? url('page_assets/img/'.$page_property_view?->third_tab[0]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-3-2.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->third_tab[1]->image)) ? url('page_assets/img/'.$page_property_view?->third_tab[1]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <div class="col">
-                        <img class="w-100" src="{{ asset('page_assets/img/day-3-3.png') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        <img class="w-100" src="{{ (!empty($page_property_view?->third_tab[2]->image)) ? url('page_assets/img/'.$page_property_view?->third_tab[2]->image) : url('upload/No_Image_Available.jpg') }}" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
 
                 </div>

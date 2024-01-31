@@ -20,7 +20,7 @@
                 <a href="{{route('myVaccine')}}" class="nav-item nav-link active">My Vaccine</a>
                 <a href="{{route('conditions')}}" class="nav-item nav-link">Conditions</a>
                 <a href="{{route('vaccination')}}" class="nav-item nav-link">Vaccination</a>
-                <a href="contact.html" class="nav-item nav-link">Blogs</a>
+                <a href="{{route('blogs')}}" class="nav-item nav-link">Blogs</a>
             </div>
             <div class="px-2"><button onclick="window.location.href='{{route('signin')}}'" class="nav-item btn btn-outline-dark ">Sign In</button></div>
             <a href="{{route('signup')}}" class="btn btn-warning py-4 px-lg-5 d-none d-lg-block">Join Now!<i class="fa fa-arrow-right ms-3"></i></a>
@@ -116,14 +116,11 @@
                 <div class="col-12 col-md-9 text-center">
                     <h1 class="text-center" style="color: black;">
                         <span class="my-health-testimony-quote my-health-testimony-quote-left" style="font-size: 48px; color: rgb(122, 191, 185);">“</span>
-                        <span style="font-weight: normal; font-size: 32px;">Chronicling my illness on PLM over the past 8 years has
-                            served as a solid longitudinal record of the trajectory of my
-                            conditions, a record arguably more significant to me than my
-                            formal medical records.</span>
+                        <span style="font-weight: normal; font-size: 32px;">{{$page_property_view?->testimonial_text ?? 'Not Available'}}</span>
                         <span class="my-health-testimony-quote my-health-testimony-quote-right" style="font-size: 48px; color: rgb(122, 191, 185);">”</span>
                     </h1>
-                    <img src="{{ asset('page_assets/img/Doug_headshot.png') }}" alt="Testimonial Person" class="rounded-circle mr-4" width="250" height="250">
-                    <h5 class="mt-3 testimonial-label font-20">DOUG <span class="darkcyan-color">//</span><span class="sub-text"> Living with depression</span></h5>
+                    <img src="{{ (!empty($page_property_view->testimonial_author_photo)) ? url('page_assets/img/'.$page_property_view->testimonial_author_photo) : url('upload/No_Image_Available.jpg') }}" alt="Testimonial Person" class="rounded-circle mr-4" width="250" height="250">
+                    <h5 class="mt-3 testimonial-label font-20">{{$page_property_view?->testimonial_author_name ?? 'Not Available'}}</h5>
                     <hr class="dotted-line width-640">
                     <br/>
                     <h3>Tracking health data has a measurable impact</h3>

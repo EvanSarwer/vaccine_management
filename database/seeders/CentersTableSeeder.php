@@ -25,6 +25,14 @@ class CentersTableSeeder extends Seeder
                 'phone' => '+8809666700100',
                 'email' => 'info@dmc.com.bd',
             ],
+            [
+                'hospital' => 'United Hospital Vaccination Center',
+                'division' => 'Dhaka',
+                'address' => 'Ka-58, kalachandpur, Model town, ঢাকা, 1212',
+                'location_link' => '<iframe src="<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116812.54866576825!2d90.33320362031537!3d23.80465061848666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c767812f6d4f%3A0xd892dc353c2e0db3!2sUnited%20Hospital%20Vaccination%20Center!5e0!3m2!1sen!2sbd!4v1706535286035!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+                'phone' => '+8809666700100',
+                'email' => 'info@uhvc.com.bd',
+            ],
 
             [
                 'hospital' => 'Chattogram Medical College Hospital',

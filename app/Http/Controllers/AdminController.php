@@ -19,6 +19,7 @@ use stdClass;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Models\Notification;
+use App\Models\VaccineStock;
 
 class AdminController extends Controller
 {
@@ -182,38 +183,45 @@ class AdminController extends Controller
     }
 
     public function AppUserEditPost(Request $request){
+        // Retrieve the user's role from the database
+        $user = User::findOrFail($request->id);
+        $userRole = $user->role; // Adjust this based on your actual attribute name
+    
+        // Apply validation rules based on the user's role
         $request->validate([
             'id' => 'required',
-            // 'name' => 'required',
             'username' => 'required|min:4|unique:users,username,'.$request->id,
             'email' => 'required|min:6|unique:users,email,'.$request->id,
             'password' => ['nullable', Password::min(8)
-            ->letters()
-            ->mixedCase()
-            ->numbers()
-            ->symbols()
-            ->uncompromised()],
-            'dob' => 'required|date',
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()],
+            'dob' => ($userRole === 'center') ? 'nullable|date' : 'required|date',
             'phone' => 'required|min:10',
         ]);
-
-        $user = User::findOrFail($request->id);
-        // $user->name = $request->name;
+    
+        // Update user information
         $user->username = $request->username;
         $user->email = $request->email;
-        if($request->password){
+        
+        if ($request->password) {
             $user->password = Hash::make($request->password);
         }
-        $user->dob = $request->dob;
+    
+        if($request->dob){
+            $user->dob = $request->dob;
+        }
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->save();
-
-        $notification = array(
+    
+        $notification = [
             'message' => 'User Info Updated Successfully',
             'alert-type' => 'success',
-        );
-
+        ];
+    
         return redirect('/admin/dashboard')->with($notification);
     }
 
@@ -558,7 +566,15 @@ class AdminController extends Controller
             'division' => 'required',
             'address' => 'required',
             'location_link' => 'required',
+            'email' => 'required|unique:users,email|min:6',
             'phone' => 'required',
+            'newPassword' => ['required', Password::min(8)
+            ->letters()
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+            ->uncompromised(), 'same:reNewPassword'],
+            'reNewPassword' => 'required|min:8'
         ]);
 
         $center = new Center();
@@ -570,6 +586,18 @@ class AdminController extends Controller
         $center->phone = $request->phone;
         $center->email = $request->email;
         $center->save();
+
+
+        // Center User Creation
+        $user = new User();
+        $user->username = $request->hospital;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->newPassword);
+        $user->role = 'center';
+        $user->status = 'active';
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->save();
 
         $notification = array(
             'message' => 'New Center Added Successfully',
@@ -629,6 +657,57 @@ class AdminController extends Controller
 
 
 
+    //////////// Center Wise Vaccine Stock Operation ////////////////
+
+    public function VaccineStockList($center_id){
+        $center = Center::findOrFail($center_id);
+        $vaccine_stocks = VaccineStock::where('center_id',$center_id)->get();
+        foreach($vaccine_stocks as $vaccine_stock){
+            $vaccine_stock->vaccine = $vaccine_stock->vaccine;
+            $vaccine_stock->center = $vaccine_stock->center;
+        }
+        $vaccines = Vaccine::all();
+        return view('admin_user.admin.center.stock.stock_list',compact('vaccine_stocks','center','vaccines'));
+    }
+
+    public function VaccineStockAdd(Request $request){
+        //validation
+        $request->validate([
+            'vaccine_id' => 'required',
+            'center_id' => 'required',
+            'new_stock' => ['required', 'integer', 'min:1'],
+            'reserve_stock' => ['nullable', 'integer', 'min:0', 'lte:new_stock'],
+        ]);
+
+
+        $vaccine_stock = VaccineStock::where('vaccine_id',$request->vaccine_id)->where('center_id',$request->center_id)->first();
+        if($vaccine_stock){
+            $vaccine_stock->available = $vaccine_stock->available + ($request->new_stock - ($request->reserve_stock ?? 0));
+            $vaccine_stock->reserved = $vaccine_stock->reserved + ($request->reserve_stock ?? 0);
+            $vaccine_stock->quantity = $vaccine_stock->quantity + $request->new_stock;
+            $vaccine_stock->save();
+        }else{
+            $new_vaccine_stock = new VaccineStock();
+            $new_vaccine_stock->vaccine_id = $request->vaccine_id;
+            $new_vaccine_stock->center_id = $request->center_id;
+            $new_vaccine_stock->available = $request->new_stock - ($request->reserve_stock ?? 0);
+            $new_vaccine_stock->reserved = $request->reserve_stock ?? 0;
+            $new_vaccine_stock->quantity = $request->new_stock;
+            $new_vaccine_stock->save();
+        }
+
+        $notification = array(
+            'message' => 'Vaccine Stock Added Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/vaccine-stock/list/'.$request->center_id)->with($notification);
+
+
+    }
+
+
+
 
 
     //////// Vaccination Status Operation ////////////////
@@ -670,21 +749,50 @@ class AdminController extends Controller
             'user_id' => 'required',
             'vaccine_id' => 'required',
             'division' => 'required',
+            'center_id' => 'required',
         ]);
 
         $vaccine = Vaccine::findOrFail($request->vaccine_id);
-        $vaccine->available_quantity = $vaccine->stock_quantity - $vaccine->vaccine_takes->sum('completed_doses');
-        if($vaccine->available_quantity <= 0){
+
+        //vaccine availability check
+        $vaccine_stock_check = VaccineStock::where('vaccine_id',$request->vaccine_id)->where('center_id',$request->center_id)->first();
+        if(!$vaccine_stock_check){
             $notification = array(
                 'message' => 'Vaccine is not available, Try again later',
                 'alert-type' => 'error',
             );
     
             return redirect('/admin/vaccination-status_list')->with($notification);
+        }else{
+            if($vaccine_stock_check->available <= 0){
+                $notification = array(
+                    'message' => 'Vaccine is not available, Try again later',
+                    'alert-type' => 'error',
+                );
+        
+                return redirect('/admin/vaccination-status_list')->with($notification);
+            }else{
+                $booked_vaccine = VaccineTake::where('vaccine_id',$request->vaccine_id)->where('center_id',$request->center_id)->sum(function ($vaccineTake) use ($vaccine) {
+                    return $vaccine->doses_required - $vaccineTake->completed_doses;
+                });
+                if($vaccine_stock_check->available <= $booked_vaccine){
+                    $notification = array(
+                        'message' => 'Vaccine is not available, Try again later',
+                        'alert-type' => 'error',
+                    );
+            
+                    return redirect('/admin/vaccination-status_list')->with($notification);
+                }
+            }
         }
 
+
+        
+        
+
+        //Already assigned vaccine check
         $vaccine_take_histories = VaccineTake::where('user_id',$request->user_id)->get();
-        if($vaccine_take_histories->count() > 0){
+        if($vaccine_take_histories && $vaccine_take_histories->count() > 0){
 
             foreach($vaccine_take_histories as $vaccine_take_history){
                 if($vaccine_take_history->vaccine_id == $request->vaccine_id){
@@ -695,40 +803,20 @@ class AdminController extends Controller
             
                     return redirect('/admin/vaccination-status_list')->with($notification);
                 }
-            }
 
-            if($vaccine_take_history->vaccine->dose_gap_number != null && $vaccine_take_history->vaccine->dose_gap_time != null){
-                $dose_gap_number = $vaccine_take_history->vaccine->dose_gap_number;
-                $dose_gap_time = $vaccine_take_history->vaccine->dose_gap_time;
-                $first_dose_date = $vaccine_take_history->first_dose_date;
 
-                if($dose_gap_time == 'day'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addDays(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
-                }else if($dose_gap_time == 'week'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addWeeks(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
-                }else if($dose_gap_time == 'month'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addMonths(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
-                }else if($dose_gap_time == 'year'){
-                    $last_dose_date = Carbon::parse($first_dose_date)->addYears(($vaccine_take_history->vaccine->doses_required - 1) * $dose_gap_number)->format('Y-m-d');
+                if(($vaccine_take_history->vaccine->doses_required - $vaccine_take_history->completed_doses) > 0){
+                    $dose_date_details = json_decode($vaccine_take_history->dose_date_details);
+                    $last_dose_date = $dose_date_details[($vaccine_take_history->vaccine->doses_required - 1)]['dose_date'];
+                    if($last_dose_date >= Carbon::now()->format('Y-m-d')){
+                        $notification = array(
+                            'message' => 'User is not eligible for this vaccine yet',
+                            'alert-type' => 'error',
+                        );
+                
+                        return redirect('/admin/vaccination-status_list')->with($notification);
+                    }
                 }
-
-                $current_date = Carbon::now()->format('Y-m-d');
-
-                if($current_date < $last_dose_date){
-                    $notification = array(
-                        'message' => 'User is not eligible for this vaccine yet',
-                        'alert-type' => 'error',
-                    );
-            
-                    return redirect('/admin/vaccination-status_list')->with($notification);
-                }
-            }else if($vaccine_take_history->vaccine->doses_required <= 1 && Carbon::parse($vaccine_take_history->first_dose_date)->format('Y-m-d') > Carbon::now()->format('Y-m-d')){
-                $notification = array(
-                    'message' => 'User is not eligible for this vaccine yet',
-                    'alert-type' => 'error',
-                );
-        
-                return redirect('/admin/vaccination-status_list')->with($notification);
             }
         }
 
@@ -736,12 +824,39 @@ class AdminController extends Controller
 
         $vaccine_take = new VaccineTake();
 
-        $vaccine_take->user_id = $request->user_id;
+        $vaccine_take->user_id = $request->user_id;   // registered by
         $vaccine_take->vaccine_id = $request->vaccine_id;
         $vaccine_take->division = $request->division;
         $vaccine_take->center_id = $center->id;
         $vaccine_take->order_date = Carbon::now()->format('Y-m-d');
-        $vaccine_take->first_dose_date = Carbon::parse($vaccine_take->order_date)->addDays(14)->toDateString();  // 14 days after order date
+        
+        // Create an array to store dose details
+        $doseDetails = [];
+        $nextDoseDate = Carbon::parse($vaccine_take->order_date)->addDays(14);
+        for ($doseNumber = 1; $doseNumber <= $request->doses_required; $doseNumber++) {
+            // Add dose details to the array
+            $doseDetails[] = [
+                'dose_number' => $doseNumber,
+                'dose_date' => $nextDoseDate->toDateString(),
+            ];
+    
+            // Calculate the next dose date by adding the dose gap
+            if($vaccine->dose_gap_number !=null && $vaccine->dose_gap_time !=null){
+              
+                if($vaccine->dose_gap_time == 'day'){
+                    $nextDoseDate->addDays($vaccine->dose_gap_number)->format('Y-m-d');
+                }else if($vaccine->dose_gap_time == 'week'){
+                    $nextDoseDate->addWeeks($vaccine->dose_gap_number)->format('Y-m-d');
+                }else if($vaccine->dose_gap_time == 'month'){
+                    $nextDoseDate->addMonths($vaccine->dose_gap_number)->format('Y-m-d');
+                }else if($vaccine->dose_gap_time == 'year'){
+                    $nextDoseDate->addYears($vaccine->dose_gap_number)->format('Y-m-d');
+                }
+            }
+        }
+        // Convert the array to JSON and store in the database
+        $vaccine_take->dose_date_details = json_encode($doseDetails);
+        
         $vaccine_take->save();
 
         $mailData = [
@@ -750,7 +865,7 @@ class AdminController extends Controller
             'user_name' => $vaccine_take->user->username,
             'vaccine' => $vaccine_take->vaccine->name,
             'registration_date' => $vaccine_take->order_date,
-            'first_dose_date' => $vaccine_take->first_dose_date,
+            'first_dose_date' => $doseDetails[0]['dose_date'],
         ];
 
         Mail::to($vaccine_take->user->email)->send(new SendMail($mailData));

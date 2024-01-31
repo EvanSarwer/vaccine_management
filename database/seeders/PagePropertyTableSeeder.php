@@ -19,7 +19,7 @@ class PagePropertyTableSeeder extends Seeder
                 'subtitle' => "Facilitating Health and Well-being: Navigating Bangladesh's Vaccine Landscape with Ease and Efficiency.",
                 'testimonial_text' => 'Chronicling my illness on PLM over the past 8 years has served as a solid longitudinal record of the trajectory of my conditions, a record arguably more significant to me than my formal medical records.',
                 'testimonial_author_name' => 'Dr. Md. Abdul Mottalib',
-                'testimonial_author_photo' => 'testimonial_author_photo.png',
+                'testimonial_author_photo' => 'Doug_headshot.png',
                 'vaccination_title1' => 'Advice and experience',
                 'vaccination_description1' => 'Tap into the shared knowledge of our community and see what has worked for other members.',
                 'vaccination_image1' => 'vaccination1.png',
