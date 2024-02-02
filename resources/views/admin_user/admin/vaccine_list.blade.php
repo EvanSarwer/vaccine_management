@@ -30,9 +30,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration (Underprivileged)</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -55,7 +62,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.center_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
           <i class="bi bi-person"></i>
           <span>Veccine Centers</span>
         </a>
@@ -140,7 +147,7 @@
                         <td>{{ $vaccine->given_quantity ?? 'Not available' }}</td>
                         <td>{{ $vaccine->booked_quantity ?? 'Not available' }}</td>
                         <td>{{ $vaccine->available_quantity ?? 'Not available' }}</td>
-                        <td>{{ $vaccine->stock_quantity ?? 'Not available' }}</td>
+                        <td>{{ $vaccine->vaccine_stocks->sum('quantity') ?? 'Not available' }}</td>
                         <td>{{ $vaccine->manufacturer ?? 'Not available' }}</td>
                         <td>
                             <a href="{{ route('admin.vaccine.edit', ['id' => $vaccine->id]) }}" class="btn btn-primary btn-sm">Edit</a>

@@ -122,23 +122,38 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="division" class="col-md-4 col-lg-3 col-form-label">Center Area (Division)</label>
-                        <div class="col-md-8 col-lg-9">
-                            <select name="division" class="form-select @error('division') is-invalid @enderror" id="division">
-                                <option value="Dhaka" {{ old('division') == 'Dhaka' ? 'selected' : '' }}>Dhaka</option>
-                                <option value="Chattogram" {{ old('division') == 'Chattogram' ? 'selected' : '' }}>Chattogram</option>
-                                <option value="Rajshahi" {{ old('division') == 'Rajshahi' ? 'selected' : '' }}>Rajshahi</option>
-                                <option value="Mymensingh" {{ old('division') == 'Mymensingh' ? 'selected' : '' }}>Mymensingh</option>
-                                <option value="Sylhet" {{ old('division') == 'Sylhet' ? 'selected' : '' }}>Sylhet</option>
-                                <option value="Khulna" {{ old('division') == 'Khulna' ? 'selected' : '' }}>Khulna</option>
-                                <option value="Rangpur" {{ old('division') == 'Rangpur' ? 'selected' : '' }}>Rangpur</option>
-                                <option value="Barishal" {{ old('division') == 'Barishal' ? 'selected' : '' }}>Barishal</option>
-                            </select>                          
-                          @error('division')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                        </div>
+                      <label for="division" class="col-md-4 col-lg-3 col-form-label">Center Area (Division)<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <select name="division" class="form-select @error('division') is-invalid @enderror" id="division">
+                          <option value="" selected>Choose Division</option>
+                          <option value="Dhaka" {{ old('division') == 'Dhaka' ? 'selected' : '' }}>Dhaka</option>
+                          <option value="Chattogram" {{ old('division') == 'Chattogram' ? 'selected' : '' }}>Chattogram</option>
+                          <option value="Rajshahi" {{ old('division') == 'Rajshahi' ? 'selected' : '' }}>Rajshahi</option>
+                          <option value="Mymensingh" {{ old('division') == 'Mymensingh' ? 'selected' : '' }}>Mymensingh</option>
+                          <option value="Sylhet" {{ old('division') == 'Sylhet' ? 'selected' : '' }}>Sylhet</option>
+                          <option value="Khulna" {{ old('division') == 'Khulna' ? 'selected' : '' }}>Khulna</option>
+                          <option value="Rangpur" {{ old('division') == 'Rangpur' ? 'selected' : '' }}>Rangpur</option>
+                          <option value="Barishal" {{ old('division') == 'Barishal' ? 'selected' : '' }}>Barishal</option>
+                        </select>                          
+                        @error('division')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                  </div>
+
+
+                  <div class="row mb-3">
+                    <label for="center_id" class="col-md-4 col-lg-3 col-form-label">Select Vaccine Center</label>
+                    <div class="col-md-8 col-lg-9">
+                      <select class="form-select @error('center_id') is-invalid @enderror" name="center_id" aria-label="Select Center" id="center_id">
+                        <option value="" selected>Choose Center</option>
+                    </select>
+
+                      @error('center_id')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
+                  </div>
 
 
                     <div class="text-center">
@@ -176,6 +191,51 @@
 
 </main>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+      // Function to update centers based on the selected division
+      function updateCenters(selectedDivision, selectedCenter) {
+          $.ajax({
+              type: 'GET',
+              url: "/division/to/centers/" + selectedDivision,
+              success: function (response) {
+                  var centerSelect = $('#center_id');
+                  centerSelect.empty();
+                  centerSelect.append('<option value="" selected>Choose Center</option>');
+
+                  $.each(response, function (index, center) {
+                      centerSelect.append('<option value="' + center.id + '" ' + (center.id == selectedCenter ? 'selected' : '') + '>' + center.hospital + '</option>');
+                  });
+              },
+              error: function (error) {
+                  console.error('Error fetching centers:', error);
+              }
+          });
+      }
+
+      // Get the old division and center values
+      var oldDivision = "{{ old('division') }}";
+      var oldCenter = "{{ old('center_id') }}";
+
+      // Initial load with old division and center values
+      updateCenters(oldDivision, oldCenter);
+
+      // Handle division change
+      $('#division').change(function () {
+          var selectedDivision = $(this).val();
+          updateCenters(selectedDivision, ''); // Clear center selection when division changes
+      });
+
+      // Handle center change
+      $('#center_id').change(function () {
+          // You may want to add logic here to handle changes to the selected center if needed
+      });
+  });
+</script>
 
 
 @endsection

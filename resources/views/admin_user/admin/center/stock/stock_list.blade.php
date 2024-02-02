@@ -30,9 +30,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration (Underprivileged)</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -55,7 +62,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.center_list')}}">
+        <a class="nav-link" href="{{route('admin.center_list', 'Dhaka')}}">
           <i class="bi bi-person"></i>
           <span>Veccine Centers</span>
         </a>
@@ -157,6 +164,9 @@
                 <thead>
                   <tr>
                     <th scope="col">Vaccine Name</th>
+                    <th scope="col">Given</th>
+                    <th scope="col">Given (Underprivileged)</th>
+                    <th scope="col">Total Given</th>
                     <th scope="col">Available</th>
                     <th scope="col">Reserved</th>
                     <th scope="col">Total Stocks</th>
@@ -169,6 +179,9 @@
                     <td>
                       {{ $stock->vaccine->name ?? 'Not Available' }}
                     </td>
+                    <td>{{ $stock->given ?? '0' }}</td>
+                    <td>{{ $stock->reserved_given ?? '0' }}</td>
+                    <td>{{ $stock->given ?? 0 +  $stock->reserved_given ?? 0 }}</td>
                     <td>{{ $stock->available ?? '0' }}</td>
                     <td>{{ $stock->reserved ?? '0' }}</td>
                     <td>{{ $stock->quantity ?? '0' }}</td>

@@ -23,7 +23,6 @@ class VeccinesTableSeeder extends Seeder
                 'dose_gap' => null,
                 'dose_gap_number' => null,
                 'dose_gap_time' => null,
-                'stock_quantity' => 100,
             ],
 
             [
@@ -36,7 +35,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 21,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -49,7 +47,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 28,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -59,7 +56,6 @@ class VeccinesTableSeeder extends Seeder
                 'dose_gap' => null,
                 'dose_gap_number' => null,
                 'dose_gap_time' => null,
-                'stock_quantity' => 100,
             ],
 
             [
@@ -72,7 +68,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 28,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -85,7 +80,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 28,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -98,7 +92,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 28,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -113,7 +106,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 60,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -129,7 +121,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 10,
                 'dose_gap_time' => 'year',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -145,7 +136,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 2,
                 'dose_gap_time' => 'month',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -161,7 +151,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 2,
                 'dose_gap_time' => 'month',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -177,7 +166,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 2,
                 'dose_gap_time' => 'month',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -191,7 +179,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 1,
                 'dose_gap_time' => 'month',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -204,7 +191,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 6,
                 'dose_gap_time' => 'month',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -217,7 +203,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 150,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -230,7 +215,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 60,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -244,7 +228,6 @@ class VeccinesTableSeeder extends Seeder
                  ]',
                 'dose_gap_number' => 60,
                 'dose_gap_time' => 'day',
-                'stock_quantity' => 100,
             ],
 
             [
@@ -254,7 +237,6 @@ class VeccinesTableSeeder extends Seeder
                 'dose_gap' => null,
                 'dose_gap_number' => null,
                 'dose_gap_time' => null,
-                'stock_quantity' => 100,
             ],
 
             [
@@ -264,7 +246,6 @@ class VeccinesTableSeeder extends Seeder
                 'dose_gap' => null,
                 'dose_gap_number' => null,
                 'dose_gap_time' => null,
-                'stock_quantity' => 100,
             ],
 
             [
@@ -274,7 +255,6 @@ class VeccinesTableSeeder extends Seeder
                 'dose_gap' => null,
                 'dose_gap_number' => null,
                 'dose_gap_time' => null,
-                'stock_quantity' => 100,
             ],
 
 

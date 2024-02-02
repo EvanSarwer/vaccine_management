@@ -59,7 +59,7 @@
             <p>Completed Doses: {{ $vaccine_take->completed_doses }}</p>
             <p>Vaccination Status: <span class="text-success">{{ $vaccine_take->vaccine_status }}</span></p>
             <p>Disease Name: {{ $vaccine_take->vaccine->disease->name }}</p>
-            <p>Completion Date: {{ now()->format('Y-m-d') }}</p>
+            <p>Completion Date: {{ $dose_date_details[$vaccine_take->completed_doses - 1]->dose_date }}</p>
         </div>
 
         <p>Issued on {{ now()->format('F d, Y') }}</p>

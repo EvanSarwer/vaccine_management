@@ -37,7 +37,6 @@ Route::get('/signup', [LandingPageController::class, 'signup'])->name('signup');
 Route::get('/sendmail', [AdminController::class, 'SendMail'])->name('sendmail');
 
 ////// End Main Landing Page Routes
-Route::get('/division/to/centers/{division}', [CommonController::class, 'DivisionToCenter'])->name('division.to.center');
 
 
 Route::middleware('auth')->group(function () {
@@ -150,6 +149,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/vaccine-registration', [AdminController::class, 'VaccineRegistrationView'])->name('admin.vaccine.registration');
 
     Route::post('/admin/vaccine-registration', [AdminController::class, 'VaccineRegistrationPost'])->name('admin.vaccine.registration.post');
+
+    Route::get('/admin/underprivileged/vaccine-registration', [AdminController::class, 'UnderprivilegedVaccineRegistrationView'])->name('admin.underprivileged.vaccine.registration');
+
+    Route::post('/admin/underprivileged/vaccine-registration', [AdminController::class, 'UnderprivilegedVaccineRegistrationPost'])->name('admin.underprivileged.vaccine.registration.post');
 
     Route::get('/admin/vaccine-registration-update/{id}', [AdminController::class, 'VaccineRegistrationUpdateView'])->name('admin.vaccine.registration.update');
 

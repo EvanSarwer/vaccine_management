@@ -30,9 +30,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration (Underprivileged)</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -55,7 +62,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.center_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
           <i class="bi bi-person"></i>
           <span>Veccine Centers</span>
         </a>
@@ -210,7 +217,7 @@
 
                           <div class="col-md-6">
                             <label for="stock_quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
-                            <input type="text" name="stock_quantity" disabled class="form-control @error('stock_quantity') is-invalid @enderror" id="stock_quantity" value="{{ (old('stock_quantity')) ? old('stock_quantity') : $vaccine->stock_quantity }}" >
+                            <input type="text" name="stock_quantity" disabled class="form-control @error('stock_quantity') is-invalid @enderror" id="stock_quantity" value="{{ (old('stock_quantity')) ? old('stock_quantity') : $vaccine->vaccine_stocks->sum('quantity') }}" >
                             @error('stock_quantity')
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -312,9 +319,22 @@
                     @if(count($vaccine_takes) > 0)
                       @foreach($vaccine_takes as $key => $vaccine_take)
                       <tr>
-                        <th scope="row"><a href="">{{$vaccine_take->id}}</a>
+                        <th scope="row"><a href="">#{{$vaccine_take->id}}</a>
                         </th>
-                        <td>{{ $vaccine_take->user->username ?? 'Not available' }}</td>
+                        <td>
+                          @if($vaccine_take->user->role == 'user')
+                          <div class="row">
+                              <div class="col"><img src="{{ (!empty($vaccine_take->user->photo)) ? url('page_assets/img/'.$vaccine_take->user->photo) : url('upload/No_Image_Available.jpg') }}" alt="Preview" class="img-fluid" style="max-width: 100px;"></div>
+                                <div class="col">Name: {{ $vaccine_take->user->username ?? 'Not available' }}</div>
+                          </div>
+                          @else
+                          <div class="row">
+                            <div class="col"><img src="{{ (!empty($vaccine_take->patient_photo)) ? url('page_assets/img/'.$vaccine_take->patient_photo) : url('upload/No_Image_Available.jpg') }}" alt="Preview" class="img-fluid" style="max-width: 100px;"></div>
+                              <div class="col">Name: {{ $vaccine_take->patient_name ?? 'Not available' }} </br>
+                              NID: {{ $vaccine_take->patient_nid ?? 'Not available' }}</div>
+                          </div>
+                          @endif
+                        </td>
                         <td>{{ $vaccine_take->vaccine->name ?? 'Not available' }}</td>
                         <td>{{ $vaccine_take->center->hospital ?? 'Not available' }}</td>
                         <td>{{ $vaccine_take->order_date ?? 'Not available' }}</td>

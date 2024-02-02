@@ -21,9 +21,7 @@ return new class extends Migration
             $table->text('dose_gap')->nullable();
             $table->integer('dose_gap_number')->nullable();
             $table->text('dose_gap_time')->nullable();
-            $table->integer('stock_quantity')->default(0);
             $table->double('price_per_dose')->nullable();
-            $table->date('expiry_date')->nullable();
             $table->timestamps();
         });
     }

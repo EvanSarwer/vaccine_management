@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('patient_phone')->nullable();
             $table->string('patient_address')->nullable();
             $table->date('patient_dob')->nullable();
-            $table->integer('patient_nid')->nullable();
+            $table->bigInteger('patient_nid')->nullable();
             $table->timestamps();
         });
     }

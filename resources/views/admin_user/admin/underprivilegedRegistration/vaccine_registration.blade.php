@@ -29,20 +29,20 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.vaccine.registration') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+        <a class="nav-link" href="{{ route('admin.underprivileged.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration (Underprivileged)</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
-      
+
 
       <li class="nav-heading">Property Operation</li>
 
@@ -80,7 +80,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Vaccine Registration - User</h1>
+      <h1>Vaccine Registration - Underprivileged User</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
@@ -113,8 +113,96 @@
                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" action="{{ route('admin.vaccine.registration.post') }}" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('admin.underprivileged.vaccine.registration.post') }}" enctype="multipart/form-data">
                     @csrf
+
+                    <div class="row mb-3">
+                      <label for="vaccine_id" class="col-md-4 col-lg-3 col-form-label">Select Image<span class="text-danger">*</span></label>
+                      <div class="col-md-8 col-lg-9">
+                        <div x-data="{ patient_photo: '{{ url('upload/No_Image_Available.jpg') }}'  }" class="row mb-3">
+                      
+                          <div class="col-md-12 col-lg-9">
+                            <img x-bind:src="patient_photo" alt="Profile" class="img-responsive" style="max-width: 150px; max-height: 100px;">
+                                  
+                            <div class="pt-2">
+                              <input x-on:change="patient_photo = URL.createObjectURL($event.target.files[0])" name="patient_photo" type="file" class="form-control @error('patient_photo') is-invalid @enderror" id="patient_photo">
+                              @error('patient_photo')
+                                <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="patient_name" class="col-md-4 col-lg-3 col-form-label">Patient Name<span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="patient_name" type="text" class="form-control @error('patient_name') is-invalid @enderror" id="patient_name" value="{{ old('patient_name') }}">
+                      @error('patient_name')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="patient_phone" class="col-md-4 col-lg-3 col-form-label">Patient Phone<span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="patient_phone" type="text" class="form-control @error('patient_phone') is-invalid @enderror" id="patient_phone" value="{{ old('patient_phone') }}">
+                      @error('patient_phone')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="patient_address" class="col-md-4 col-lg-3 col-form-label">Patient Address<span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="patient_address" type="text" class="form-control @error('patient_address') is-invalid @enderror" id="patient_address" value="{{ old('patient_address') }}">
+                      @error('patient_address')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="patient_dob" class="col-md-4 col-lg-3 col-form-label">Date of Birth<span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="patient_dob" type="date" class="form-control @error('patient_dob') is-invalid @enderror" id="patient_dob" value="{{ old('patient_dob') }}">
+                      @error('patient_dob')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="patient_nid" class="col-md-4 col-lg-3 col-form-label">NID / BID<span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="patient_nid" type="text" class="form-control @error('patient_nid') is-invalid @enderror" id="patient_nid" value="{{ old('patient_nid') }}">
+                      @error('patient_nid')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="vaccine_id" class="col-md-4 col-lg-3 col-form-label">Select Vaccine<span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                      {{-- <input name="vaccine_id" type="text" class="form-control @error('vaccine_id') is-invalid @enderror" id="vaccine_id" value="{{ $disease->name }}"> --}}
+                      <select class="form-select @error('vaccine_id') is-invalid @enderror" name="vaccine_id" aria-label="Select Vaccine" id="vaccine_id">
+                        <option value="" selected>Choose Vaccine</option>
+                        @foreach ($vaccines as $vaccine)
+                            <option value="{{ $vaccine['id'] }}" {{ old('vaccine_id') == $vaccine['id'] ? 'selected' : '' }}>
+                                {{ $vaccine['name'] }}
+                            </option>
+                        @endforeach
+                      </select>
+
+                      @error('vaccine_id')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                </div>
 
                     <div class="row mb-3">
                       <label for="division" class="col-md-4 col-lg-3 col-form-label">Center Area (Division)<span class="text-danger">*</span></label>
@@ -137,7 +225,7 @@
                   </div>
 
                   <div class="row mb-3">
-                    <label for="center_id" class="col-md-4 col-lg-3 col-form-label">Select Vaccine Center</label>
+                    <label for="center_id" class="col-md-4 col-lg-3 col-form-label">Select Vaccine Center<span class="text-danger">*</span></label>
                     <div class="col-md-8 col-lg-9">
                       <select class="form-select @error('center_id') is-invalid @enderror" name="center_id" aria-label="Select Center" id="center_id">
                         <option value="" selected>Choose Center</option>
@@ -149,44 +237,7 @@
                     </div>
                 </div>
 
-
-                    <div class="row mb-3">
-                        <label for="user_id" class="col-md-4 col-lg-3 col-form-label">Select User</label>
-                        <div class="col-md-8 col-lg-9">
-                          <select class="form-select @error('user_id') is-invalid @enderror" name="user_id" aria-label="Select User" id="user_id">
-                            <option value="" selected>Choose User</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user['id'] }}" {{ old('user_id') == $user['id'] ? 'selected' : '' }}>
-                                    {{ $user['username'] }}
-                                </option>
-                            @endforeach
-                          </select>
-
-                          @error('user_id')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                        </div>
-                    </div>
                     
-
-                    <div class="row mb-3">
-                        <label for="vaccine_id" class="col-md-4 col-lg-3 col-form-label">Select Vaccine</label>
-                        <div class="col-md-8 col-lg-9">
-                          {{-- <input name="vaccine_id" type="text" class="form-control @error('vaccine_id') is-invalid @enderror" id="vaccine_id" value="{{ $disease->name }}"> --}}
-                          <select class="form-select @error('vaccine_id') is-invalid @enderror" name="vaccine_id" aria-label="Select Vaccine" id="vaccine_id">
-                            <option value="" selected>Choose Vaccine</option>
-                            @foreach ($vaccines as $vaccine)
-                                <option value="{{ $vaccine['id'] }}" {{ old('vaccine_id') == $vaccine['id'] ? 'selected' : '' }}>
-                                    {{ $vaccine['name'] }}
-                                </option>
-                            @endforeach
-                          </select>
-
-                          @error('vaccine_id')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                        </div>
-                    </div>
 
 
 

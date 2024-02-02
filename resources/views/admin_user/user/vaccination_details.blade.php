@@ -124,7 +124,7 @@
                     </div>
 
                     <div class="col-7">
-                      <div style="min-width:100%; max-width: 100%; overflow: hidden;">
+                      <div style="max-width: 100%; overflow: hidden;">
                         {!! $vaccine_take->center->location_link !!}
                       </div>
                     </div>
@@ -137,12 +137,14 @@
                     
                     <h5 class="text-primary">Doses Schedule:</h5>
 
-                    @foreach ($vaccine_doses as $dose)
+                    @foreach ($dose_date_details as $dose)
 
                     <h6>
                         {{ $dose->dose_number }}-dose Date: {{ $dose->dose_date }}
-                        @if($vaccine_take->completed_doses >= $dose->dose_number)
-                            <small class="text-success">Done</small>
+                        @if($dose->dose_status == 'Completed')
+                            <small class="text-success">Completed</small>
+                        @else
+                            <small class="text-info">Pending</small>
                         @endif
                     </h6>
 
@@ -155,7 +157,7 @@
                 <br/>
                   <div class="col-12 mt-5 row">
                     <div class="col-6">
-                        <h5 class="">Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-warning'}}">{{ $vaccine_take->vaccine_status}}</small></h5>
+                        <h5 class="">Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-danger'}}">{{ $vaccine_take->vaccine_status}}</small></h5>
                     </div>
                     <div class="col-2"></div>
                     <div class="col-4">

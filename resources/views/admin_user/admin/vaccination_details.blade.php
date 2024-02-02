@@ -28,12 +28,18 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
+      <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
         <i class="bi bi-grid"></i>
         <span>Vaccine Registration</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+        <i class="bi bi-grid"></i>
+        <span>Vaccine Registration (Underprivileged)</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
 
     <li class="nav-heading">Property Operation</li>
@@ -53,7 +59,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{route('admin.center_list')}}">
+      <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
         <i class="bi bi-person"></i>
         <span>Veccine Centers</span>
       </a>
@@ -109,19 +115,38 @@
                 <br/>
                   <div class="col-12 row">
                     <h5 class="text-primary">User Details:</h5>
-                    <div class="col-5">
-                        <h6>Name: {{ $vaccine_take->user->username }}</h6>
-                        <h6>Email: {{ $vaccine_take->user->email }}</h6>
-                    </div>
-                    <div class="col-2">
-                    </div>
-                    <div class="col-5">
-                        <h6>Phone: {{ $vaccine_take->user->phone }}</h6>
-                        <h6>Address: {{ $vaccine_take->user->address }}</h6>
-                    </div>
-                  </div>
 
-                  <br/>
+                    @if($vaccine_take->user->role == 'user')
+                      <div class="col-5">
+                          <h6>Name: {{ $vaccine_take->user->username }}</h6>
+                          <h6>Email: {{ $vaccine_take->user->email }}</h6>
+                      </div>
+                      <div class="col-2">
+                      </div>
+                      <div class="col-5">
+                          <h6>Phone: {{ $vaccine_take->user->phone }}</h6>
+                          <h6>Address: {{ $vaccine_take->user->address }}</h6>
+                      </div>
+
+                    @else
+                      <div class="col-5">
+                          <h6><img src="{{ (!empty($vaccine_take->patient_photo)) ? url('page_assets/img/'.$vaccine_take->patient_photo) : url('upload/No_Image_Available.jpg') }}" alt="Preview" class="img-fluid" style="max-width: 100px;"></h6>
+                          <h6>Patient Name: {{ $vaccine_take->patient_name }}</h6>
+                      </div>
+                      <div class="col-2">
+                      </div>
+                      <div class="col-5">
+                          <h6>Patient Phone: {{ $vaccine_take->patient_phone }}</h6>
+                          <h6>Patient Address: {{ $vaccine_take->patient_address }}</h6>
+                    @endif
+                  </div>
+                
+                      
+                    
+
+
+
+                <br/>
                 <br/>
                   <div class="col-12 row">
                     <h5 class="text-primary">Vaccine Details:</h5>
@@ -164,12 +189,14 @@
                     
                     <h5 class="text-primary">Doses Schedule:</h5>
 
-                    @foreach ($vaccine_doses as $dose)
+                    @foreach ($dose_date_details as $dose)
 
                     <h6>
                         {{ $dose->dose_number }}-dose Date: {{ $dose->dose_date }}
-                        @if($vaccine_take->completed_doses >= $dose->dose_number)
-                            <small class="text-success">Done</small>
+                        @if($dose->dose_status == 'Completed')
+                            <small class="text-success">Completed</small>
+                        @else
+                            <small class="text-info">Pending</small>
                         @endif
                     </h6>
 
@@ -182,7 +209,7 @@
                 <br/>
                   <div class="col-12 mt-5 row">
                     <div class="col-6">
-                        <h5 class="">Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-warning'}}">{{ $vaccine_take->vaccine_status}}</small></h5>
+                        <h5 class="">Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-danger'}}">{{ $vaccine_take->vaccine_status}}</small></h5>
                     </div>
                     <div class="col-2"></div>
                     <div class="col-4">

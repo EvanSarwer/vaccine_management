@@ -29,9 +29,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration (Underprivileged)</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -54,7 +61,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.center_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
           <i class="bi bi-person"></i>
           <span>Veccine Centers</span>
         </a>
@@ -118,38 +125,44 @@
                     <input type="hidden" name="id" value="{{ $vaccine_take->id }}">
 
                     <div class="row mb-3">
+                      <label for="photo" class="col-md-4 col-lg-3 col-form-label">Photo</label>
+                      <div class="col-md-8 col-lg-9">
+                        @if($vaccine_take->user->role == 'user')
+                          <img src="{{ (!empty($vaccine_take->user->photo)) ? url('upload/user_images/'.$vaccine_take->user->photo) : url('upload/No_Image_Available.jpg') }}" alt="Preview" class="img-fluid" style="max-width: 150px;">
+                        @else
+                          <img src="{{ (!empty($vaccine_take->patient_photo)) ? url('page_assets/img/'.$vaccine_take->patient_photo) : url('upload/No_Image_Available.jpg') }}" alt="Preview" class="img-fluid" style="max-width: 150px;">
+                        @endif
+                        @error('photo')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                  </div>
+
+                    <div class="row mb-3">
                         <label for="user_id" class="col-md-4 col-lg-3 col-form-label">User</label>
                         <div class="col-md-8 col-lg-9">
-                          
-                          <select class="form-select  @error('user_id') is-invalid @enderror" name="user_id" disabled aria-label="Select User" id="user_id">
-                            <option value="" selected>Choose User</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user['id'] }}" {{ (old('user_id')) ? (old('user_id') == $user['id'] ? 'selected' : '') : ($vaccine_take->user_id == $user['id'] ? 'selected' : '') }}>
-                                    {{ $user['username'] }}
-                                </option>
-                            @endforeach
-                          </select>
-                          
+                          <input type="text" name="user_id" disabled class="form-control @error('user_id') is-invalid @enderror" id="user_id" value="{{ $vaccine_take->user->role == 'user' ? $vaccine_take->user->username : $vaccine_take->patient_name }}" readonly>
                           @error('user_id')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
                         </div>
                     </div>
+
+                    <div class="row mb-3">
+                      <label for="nid" class="col-md-4 col-lg-3 col-form-label">NID</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input type="text" name="nid" disabled class="form-control @error('nid') is-invalid @enderror" id="nid" value="{{ $vaccine_take->user->role == 'user' ? $vaccine_take->user->nid : $vaccine_take->patient_nid }}" readonly>
+                        @error('nid')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                  </div>
                     
 
                     <div class="row mb-3">
-                        <label for="vaccine_id" class="col-md-4 col-lg-3 col-form-label">Select Vaccine</label>
+                        <label for="vaccine_id" class="col-md-4 col-lg-3 col-form-label">Vaccine</label>
                         <div class="col-md-8 col-lg-9">
-                          
-                          <select class="form-select @error('vaccine_id') is-invalid @enderror" name="vaccine_id" {{ $vaccine_take->completed_doses <= 0 ? '' : 'disabled' }} aria-label="Select Vaccine" id="vaccine_id">
-                            <option value="" selected>Choose Vaccine</option>
-                            @foreach ($vaccines as $vaccine)
-                                <option value="{{ $vaccine['id'] }}" {{ (old('vaccine_id')) ? (old('vaccine_id') == $vaccine['id'] ? 'selected' : '') : ($vaccine_take->vaccine_id == $vaccine['id'] ? 'selected' : '') }}>
-                                    {{ $vaccine['name'] }}
-                                </option>
-                            @endforeach
-                          </select>
-                          
+                          <input type="text" name="vaccine_id" disabled class="form-control @error('vaccine_id') is-invalid @enderror" id="vaccine_id" value="{{ $vaccine_take->vaccine->name }}" readonly>                     
                           @error('vaccine_id')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -159,21 +172,42 @@
                     <div class="row mb-3">
                         <label for="division" class="col-md-4 col-lg-3 col-form-label">Center Area (Division)</label>
                         <div class="col-md-8 col-lg-9">
-                            <select name="division" {{ $vaccine_take->completed_doses <= 0 ? '' : 'disabled' }} class="form-select @error('division') is-invalid @enderror" id="division">
-                                <option value="Dhaka" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Dhaka' ? 'selected' : '' }}>Dhaka</option>
-                                <option value="Chattogram" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Chattogram' ? 'selected' : '' }}>Chattogram</option>
-                                <option value="Rajshahi" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Rajshahi' ? 'selected' : '' }}>Rajshahi</option>
-                                <option value="Mymensingh" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Mymensingh' ? 'selected' : '' }}>Mymensingh</option>
-                                <option value="Sylhet" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Sylhet' ? 'selected' : '' }}>Sylhet</option>
-                                <option value="Khulna" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Khulna' ? 'selected' : '' }}>Khulna</option>
-                                <option value="Rangpur" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Rangpur' ? 'selected' : '' }}>Rangpur</option>
-                                <option value="Barishal" {{ ((old('division')) ? old('division') : $vaccine_take->division) == 'Barishal' ? 'selected' : '' }}>Barishal</option>
-                            </select>
+                            <input type="text" name="division" disabled class="form-control @error('division') is-invalid @enderror" id="division" value="{{ $vaccine_take->division }}" readonly>
                           @error('division')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
                         </div>
                     </div>
+
+                    <div class="row mb-3">
+                      <label for="center" class="col-md-4 col-lg-3 col-form-label">Center Name</label>
+                      <div class="col-md-8 col-lg-9">
+                          <input type="text" name="center" disabled class="form-control @error('center') is-invalid @enderror" id="center" value="{{ $vaccine_take->center->hospital }}" readonly>
+                        @error('center')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="center" class="col-md-4 col-lg-3 col-form-label">Completed Doses</label>
+                      <div class="col-md-8 col-lg-9">
+                        @if($vaccine_take->completed_doses > 0)
+                          @foreach ($dose_date_details as $dose)
+                            <h6>
+                                @if($dose->dose_status == 'completed')
+                                {{ $dose->dose_number }}-dose Date: {{ $dose->dose_date }}
+                                    <small class="text-success">Completed</small>
+                                @endif
+                            </h6>
+                          @endforeach
+                        @else
+                            <label for="dose" class="col-md-4 col-lg-3 col-form-label">No Dose Completed</label>
+                        @endif
+                      </div>
+                    </div>
+
+                    <input type="hidden" name="next_dose_number" value="{{ $vaccine_take->completed_doses + 1 }}">
 
 
                     <div class="row mb-3">
@@ -182,31 +216,35 @@
                         <div class="row g-3">
 
                           <div class="col-md-4">
-                            <label for="first_dose_date" class="form-label">First Dose<span class="text-danger">*</span></label>
-                            <input type="date" name="first_dose_date" {{ $vaccine_take->completed_doses <= 0 ? '' : 'disabled' }} class="form-control @error('first_dose_date') is-invalid @enderror" id="first_dose_date" value="{{ (old('first_dose_date')) ? old('first_dose_date') : $vaccine_take->first_dose_date }}" >
-                            @error('first_dose_date')
-                              <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
+                            @if($vaccine_take->completed_doses < $vaccine_take->vaccine->doses_required)
+                              <label for="next_dose_date" class="form-label">{{$vaccine_take->completed_doses + 1 }} Dose<span class="text-danger">*</span></label>
+                              <input type="date" name="next_dose_date" {{ $vaccine_take->completed_doses < $vaccine_take->vaccine->doses_required ? '' : 'disabled' }} class="form-control @error('next_dose_date') is-invalid @enderror" id="next_dose_date" value="{{ old('next_dose_date') }}" >
+                              @error('next_dose_date')
+                                <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                            @else
+                              <label for="next_dose_date" class="form-label">All Doses Completed</label>
+                            @endif
+
+
                           </div>
 
+
                           <div class="col-md-4">
-                            <label for="completed_doses" class="form-label">Completed Dose</label>
-                            <input type="text" name="completed_doses" class="form-control @error('completed_doses') is-invalid @enderror" id="completed_doses" value="{{ (old('completed_doses')) ? old('completed_doses') : $vaccine_take->completed_doses }}" >
-                            @error('completed_doses')
-                              <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                          </div>
-                          {{-- <div class="col-md-4">
-                            <label for="dose_gap_time" class="form-label">Timeline</label>
-                            <select name="dose_gap_time" class="form-select @error('dose_gap_time') is-invalid @enderror" id="dose_gap_time">
-                                <option value="day" {{ ((old('dose_gap_time')) ? old('dose_gap_time') : $vaccine->dose_gap_time) == 'day' ? 'selected' : '' }}>Day</option>
-                                <option value="month" {{ ((old('dose_gap_time')) ? old('dose_gap_time') : $vaccine->dose_gap_time) == 'month' ? 'selected' : '' }}>Month</option>
-                                <option value="year" {{ ((old('dose_gap_time')) ? old('dose_gap_time') : $vaccine->dose_gap_time) == 'year' ? 'selected' : '' }}>Year</option>
-                            </select>
-                            @error('dose_gap_time')
+
+                            @if($vaccine_take->completed_doses < $vaccine_take->vaccine->doses_required)
+                              <label for="next_dose_assigned_date" class="form-label">Assigned Date: {{$dose_date_details[$vaccine_take->completed_doses]->dose_date}}<span class="text-danger">*</span></label>
+                              <input type="hidden" name="next_dose_assigned_date" value="{{$dose_date_details[$vaccine_take->completed_doses]->dose_date}}">
+                              @error('next_dose_assigned_date')
                                 <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                          </div> --}}
+                              @enderror
+                            @endif
+
+
+                          </div>
+
+                          
                         </div>
                         
                       </div>

@@ -78,14 +78,27 @@
            <tr>
                <th colspan="2"><h5 class="text-primary">User Details:</h5></th>
            </tr>
-           <tr>
-               <td><h6>Name: {{ $vaccine_take->user->username }}</h6></td>
-               <td><h6>Email: {{ $vaccine_take->user->email }}</h6></td>
-           </tr>
-           <tr>
-               <td><h6>Phone: {{ $vaccine_take->user->phone }}</h6></td>
-               <td><h6>Address: {{ $vaccine_take->user->address }}</h6></td>
-           </tr>
+           @if($vaccine_take->user->role == 'user')
+                <tr>
+                    <td><h6>Name: {{ $vaccine_take->user->username }}</h6></td>
+                    <td><h6>Email: {{ $vaccine_take->user->email }}</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Phone: {{ $vaccine_take->user->phone }}</h6></td>
+                    <td><h6>Address: {{ $vaccine_take->user->address }}</h6></td>
+                </tr>
+            @else
+                <tr>
+                    <td><img src="{{ (!empty($vaccine_take->patient_photo)) ? url('page_assets/img/'.$vaccine_take->patient_photo) : url('upload/No_Image_Available.jpg') }}" alt="Preview" class="img-fluid" style="max-width: 100px;"></td>
+                    <td><h6>Patient Name: {{ $vaccine_take->patient_name }}</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Patient Phone: {{ $vaccine_take->patient_phone }}</h6></td>
+                    <td><h6>Patient Address: {{ $vaccine_take->patient_address }}</h6></td>
+                </tr>
+            @endif
+
+
        </table>
    
        <table>
@@ -114,15 +127,17 @@
            <tr>
                <th><h5 class="text-primary">Doses Schedule:</h5></th>
            </tr>
-           @foreach ($vaccine_doses as $dose)
+           @foreach ($dose_date_details as $dose)
                <tr>
                    <td>
-                       <h6>
-                           {{ $dose->dose_number }}-dose Date: {{ $dose->dose_date }}
-                           @if($vaccine_take->completed_doses >= $dose->dose_number)
-                               <small class="text-success">Done</small>
-                           @endif
-                       </h6>
+                        <h6>
+                            {{ $dose->dose_number }}-dose Date: {{ $dose->dose_date }}
+                            @if($dose->dose_status == 'Completed')
+                                <small class="text-success">Completed</small>
+                            @else
+                                <small class="text-info">Pending</small>
+                            @endif
+                        </h6>
                    </td>
                </tr>
            @endforeach
@@ -130,7 +145,7 @@
    
        <table>
            <tr>
-               <th><h5>Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-warning'}}">{{ $vaccine_take->vaccine_status}}</small></h5></th>
+               <th><h5>Vaccination Status: <small class="h5 {{ $vaccine_take->vaccine_status == 'Completed' ? 'text-success' : 'text-danger'}}">{{ $vaccine_take->vaccine_status}}</small></h5></th>
            </tr>
        </table>
    </body>

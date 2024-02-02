@@ -29,9 +29,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration', 'Dhaka') }}">
+        <a class="nav-link collapsed" href="{{ route('admin.vaccine.registration') }}">
           <i class="bi bi-grid"></i>
           <span>Vaccine Registration</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.underprivileged.vaccine.registration') }}">
+          <i class="bi bi-grid"></i>
+          <span>Vaccine Registration (Underprivileged)</span>
         </a>
       </li><!-- End Dashboard Nav -->
   
@@ -54,7 +61,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.center_list')}}">
+        <a class="nav-link collapsed" href="{{route('admin.center_list', 'Dhaka')}}">
           <i class="bi bi-person"></i>
           <span>Veccine Centers</span>
         </a>
@@ -207,31 +214,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Details<span class="text-danger">*</span></label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="row g-2">
-
-                          <div class="col-md-6">
-                            <label for="stock_quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
-                            <input type="text" name="stock_quantity" class="form-control @error('stock_quantity') is-invalid @enderror" id="stock_quantity" value="{{ (old('stock_quantity')) ? old('stock_quantity') : $vaccine->stock_quantity }}" >
-                            @error('stock_quantity')
-                              <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                          </div>
-                          {{-- <div class="col-md-6">
-                            <label for="offer_percent" class="form-label">Offer in (%)</label>
-                            <input type="text" name="offer_percent" class="form-control @error('offer_percent') is-invalid @enderror" id="offer_percent" value="{{ old('offer_percent') }}" >
-                            @error('offer_percent')
-                              <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                          </div> --}}
                         </div>
                         
                       </div>

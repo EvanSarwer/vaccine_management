@@ -11,8 +11,15 @@
     <h4>Dear <b>{{$mailData['user_name']}}</b>,</h4>
     <p>You are applying for this <b>{{ $mailData['vaccine']}} vaccine</b> by our system at <b>{{$mailData['registration_date']}}.</p>
     <p>Your application is successfully submitted.</p>
+    @if(isset($mailData['first_dose_date']) )
+        <h5>Your First Dose Date: <b>{{$mailData['first_dose_date']}}</b></h5>
+    @else
+        <h5>Your Next Dose Date: <b>{{$mailData['next_dose_date']}}</b></h5>
+    @endif
 
-    <h5>Your First Dose Date: <b>{{$mailData['first_dose_date']}}</b></h5>
+    @if(isset($mailData['status']))
+        <h4>Vaccination Status: <b>{{$mailData['status']}}</b></h4>
+    @endif
     <p>For more information please visit our website.</p>
 
 

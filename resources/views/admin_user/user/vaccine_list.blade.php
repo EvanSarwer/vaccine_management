@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ ($vaccine->dose_gap_number && $vaccine->dose_gap_time) ? $vaccine->dose_gap_number+' - '+$vaccine->dose_gap_time+'s' : 'Not available' }}</td>
+                            <td>{{ ($vaccine->dose_gap_number && $vaccine->dose_gap_time) ? $vaccine->dose_gap_number . ' - ' . $vaccine->dose_gap_time . 's' : 'Not available' }}</td>
                             <td>{{ $vaccine->manufacturer ?? 'Not available' }}</td>
                             <td>
                                 <a href="{{ route('user.vaccineWise.registration', ['id' => $vaccine->id]) }}" class="btn btn-primary btn-sm">Apply</a>
