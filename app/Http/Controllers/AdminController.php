@@ -747,7 +747,9 @@ class AdminController extends Controller
             $vaccine->given_quantity = $vaccine->vaccine_takes->sum('completed_doses');
             $vaccine->disease_name = $vaccine->disease->name;
 
-            $vaccine->vaccine_taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0 ? 0 : ($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100;
+            $vaccine->vaccine_taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0
+                                                ? 0
+                                                : round(($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100, 4);
             
         }
 
@@ -1277,7 +1279,9 @@ class AdminController extends Controller
                                     $vaccine->given_quantity = $vaccine->vaccine_takes->sum('completed_doses');
         $vaccine->disease_name = $vaccine->disease->name;
 
-        $vaccine->vaccine_taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0 ? 0 : ($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100;
+        $vaccine->vaccine_taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0
+    ? 0
+    : round(($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100, 4);
 
         $vaccine_takes = VaccineTake::where('vaccine_id',$vaccine->id)->get();
         foreach($vaccine_takes as $vaccine_take){

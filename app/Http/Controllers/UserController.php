@@ -317,7 +317,9 @@ class UserController extends Controller
             $vaccine->given_quantity = $vaccine->vaccine_takes->sum('completed_doses');
             $vaccine->disease_name = $vaccine->disease->name;
 
-            $vaccine->vaccine_taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0 ? 0 : ($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100;
+            $vaccine->vaccine_taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0
+    ? 0
+    : round(($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100, 4);
             
         }
         return view('admin_user.user.vaccine_list',compact('vaccines'));
