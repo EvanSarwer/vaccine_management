@@ -76,7 +76,7 @@
 
 
 
-  <main id="main" class="main">
+  <main id="main" class="main" style="min-height: 85vh">
 
     <div class="pagetitle">
       <h1>Profile</h1>
