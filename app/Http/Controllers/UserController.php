@@ -28,6 +28,8 @@ class UserController extends Controller
             $vaccine_take->user = $vaccine_take->user;
             $vaccine_take->vaccine = $vaccine_take->vaccine;
             $vaccine_take->center = $vaccine_take->center;
+            $dose_date_details = json_decode($vaccine_take->dose_date_details);
+            $vaccine_take->first_dose_date = $dose_date_details[0]->dose_date;
         }
         return view('admin_user.user.index', compact('vaccine_takes'));
     }
@@ -61,13 +63,13 @@ class UserController extends Controller
         $userData->address = $request->address;
 
         if($request->hasfile('photo')){
-            $destination = 'upload/user_images/'.$userData->photo;
+            $destination = 'page_assets/img/'.$userData->photo;
             if(File::exists($destination)){
                 File::delete($destination);
             }
             $file = $request->file('photo');
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/user_images'),$filename);
+            $file->move(public_path('page_assets/img/'),$filename);
             $userData['photo'] = $filename;
         }
         $userData->save();

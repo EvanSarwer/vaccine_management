@@ -7,16 +7,30 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('user.index') }}">
+      <a class="nav-link" href="{{ route('center.index') }}">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('user.vaccine.registration') }}">
+      <a class="nav-link collapsed" href="{{ route('center.vaccine.stock.list') }}">
+        <i class="bi bi-grid"></i>
+        <span>Vaccine Stock</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('center.vaccine.registration') }}">
         <i class="bi bi-grid"></i>
         <span>Vaccine Registration</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('center.underprivileged.vaccine.registration') }}">
+        <i class="bi bi-grid"></i>
+        <span>Vaccine Registration (Underprivileged)</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
@@ -25,7 +39,7 @@
     <li class="nav-heading">Other Operation</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{route('user.vaccine_list')}}">
+      <a class="nav-link collapsed" href="{{route('center.vaccine_list')}}">
         <i class="bi bi-person"></i>
         <span>Vaccines</span>
       </a>
@@ -47,7 +61,7 @@
       <h1>Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('center.index') }}">Home</a></li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
       </nav>
@@ -139,7 +153,7 @@
 
                 <div class="tab-pane fade show active pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form method="POST" action="{{ route('user.password.update') }}">
+                  <form method="POST" action="{{ route('center.password.update') }}">
                   @csrf
 
                     <div class="row mb-3">

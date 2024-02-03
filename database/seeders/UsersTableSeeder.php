@@ -60,6 +60,14 @@ class UsersTableSeeder extends Seeder
                 'status' => 'active',
             ],
             [
+                'username' => 'uhvc',
+                'email' => 'info@uhvc.com.bd',
+                'nid' => null,
+                'password' => Hash::make('12345'),
+                'role' => 'center',
+                'status' => 'active',
+            ],
+            [
                 'username' => 'cmch',
                 'email' => 'info@cmch.com.bd',
                 'nid' => null,

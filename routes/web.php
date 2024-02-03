@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CenterUserController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
@@ -221,6 +222,40 @@ Route::middleware(['auth', 'role:user'])->group(function(){
 
 });
 ////// End User Pages //////
+
+////// Center-User Pages //////
+Route::middleware(['auth', 'role:center'])->group(function(){
+    Route::get('/center/dashboard', [CenterUserController::class, 'index'])->name('center.index');
+
+    Route::get('/center/profile', [CenterUserController::class, 'CenterUserProfileInfo'])->name('center.profileInfo');
+    Route::post('/center/profile/update', [CenterUserController::class, 'CenterUserProfileUpdate'])->name('center.profile.update');
+
+    Route::get('/center/change/password', [CenterUserController::class, 'CenterUserChangePassword'])->name('center.change.password');
+    Route::post('/center/password/update', [CenterUserController::class, 'CenterUserPasswordUpdate'])->name('center.password.update');
+
+    // Center wise Vaccine Stock ////
+    Route::get('/center/vaccine-stock/list', [CenterUserController::class, 'VaccineStockList'])->name('center.vaccine.stock.list');
+    Route::post('/center/vaccine-stock/add', [CenterUserController::class, 'VaccineStockAdd'])->name('center.vaccine.stock.add.post');
+
+
+    ////Property Operation Routes Vaccines////
+    Route::get('/center/vaccine_list', [CenterUserController::class, 'VaccineList'])->name('center.vaccine_list');
+
+    ////Property Operation Routes Vaccination Status Dose////
+    Route::get('/center/vaccine-registration', [CenterUserController::class, 'VaccineRegistrationView'])->name('center.vaccine.registration');
+    Route::post('/center/vaccine-registration', [CenterUserController::class, 'VaccineRegistrationPost'])->name('center.vaccine.registration.post');
+
+    Route::get('/center/underprivileged/vaccine-registration', [CenterUserController::class, 'UnderprivilegedVaccineRegistrationView'])->name('center.underprivileged.vaccine.registration');
+    Route::post('/center/underprivileged/vaccine-registration', [CenterUserController::class, 'UnderprivilegedVaccineRegistrationPost'])->name('center.underprivileged.vaccine.registration.post');
+
+    Route::get('/center/vaccine-registration-update/{id}', [CenterUserController::class, 'VaccineRegistrationUpdateView'])->name('center.vaccine.registration.update');
+    Route::post('/center/vaccine-registration-update', [CenterUserController::class, 'VaccineRegistrationUpdatePost'])->name('center.vaccine.registration.update.post');
+
+    Route::get('/center/vaccination-details/{id}', [CenterUserController::class, 'VaccinationDetailsView'])->name('center.vaccination.details');
+
+    // Notification Meassage ///////
+    Route::get('/center/message/list', [CenterUserController::class, 'MessageList'])->name('center.message.list');
+});
 
 
 

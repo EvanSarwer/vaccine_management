@@ -7,16 +7,30 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('user.index') }}">
+      <a class="nav-link" href="{{ route('center.index') }}">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('user.vaccine.registration') }}">
+      <a class="nav-link collapsed" href="{{ route('center.vaccine.stock.list') }}">
+        <i class="bi bi-grid"></i>
+        <span>Vaccine Stock</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('center.vaccine.registration') }}">
         <i class="bi bi-grid"></i>
         <span>Vaccine Registration</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('center.underprivileged.vaccine.registration') }}">
+        <i class="bi bi-grid"></i>
+        <span>Vaccine Registration (Underprivileged)</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
@@ -25,7 +39,7 @@
     <li class="nav-heading">Other Operation</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{route('user.vaccine_list')}}">
+      <a class="nav-link collapsed" href="{{route('center.vaccine_list')}}">
         <i class="bi bi-person"></i>
         <span>Vaccines</span>
       </a>
@@ -47,7 +61,7 @@
       <h1>Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('center.index') }}">Home</a></li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
       </nav>
@@ -100,10 +114,10 @@
                     <div class="col-lg-9 col-md-8">{{$userData->email}}</div>
                   </div>
 
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="col-lg-3 col-md-4 label">Date Of Birth</div>
                     <div class="col-lg-9 col-md-8">{{$userData->dob}}</div>
-                  </div>
+                  </div> --}}
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
@@ -142,7 +156,7 @@
                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('center.profile.update') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div x-data="{ profileImage: '{{ (!empty($userData->photo)) ? url('page_assets/img/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}' }" class="row mb-3">
@@ -176,7 +190,7 @@
                       </div>
                     </div>
 
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                       <label for="dob" class="col-md-4 col-lg-3 col-form-label">Date Of Birth<span class="text-danger">*</span></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="dob" type="date" class="form-control @error('dob') is-invalid @enderror" id="dob" value="{{(old('dob')) ? old('dob') : $userData->dob}}">
@@ -184,7 +198,7 @@
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
                       </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mb-3">
                       <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone<span class="text-danger">*</span></label>

@@ -95,7 +95,7 @@
           <div class="card row">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="{{ (!empty($userData->photo)) ? url('upload/admin_images/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}" alt="Profile" class="rounded-circle">
+              <img src="{{ (!empty($userData->photo)) ? url('page_assets/img/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}" alt="Profile" class="rounded-circle">
               <h2>{{$userData->username}}</h2>
               <!-- <h3>Web Designer</h3>
               <div class="social-links mt-2">
@@ -180,7 +180,7 @@
                   <form method="POST" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <div x-data="{ profileImage: '{{ (!empty($userData->photo)) ? url('upload/admin_images/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}' }" class="row mb-3">
+                    <div x-data="{ profileImage: '{{ (!empty($userData->photo)) ? url('page_assets/img/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}' }" class="row mb-3">
                         <label for="photo" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                         <div class="col-md-8 col-lg-9">
                             <img x-bind:src="profileImage" alt="Profile" class="rounded-circle">

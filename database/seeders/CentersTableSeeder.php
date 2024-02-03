@@ -18,6 +18,7 @@ class CentersTableSeeder extends Seeder
 
             //Centers
             [
+                'center_user_id' => 5,
                 'hospital' => 'Dhaka Medical College Hospital',
                 'division' => 'Dhaka',
                 'address' => 'Dhaka Medical College, Bakshibazar, Dhaka-1211',
@@ -26,6 +27,7 @@ class CentersTableSeeder extends Seeder
                 'email' => 'info@dmc.com.bd',
             ],
             [
+                'center_user_id' => 6,
                 'hospital' => 'United Hospital Vaccination Center',
                 'division' => 'Dhaka',
                 'address' => 'Ka-58, kalachandpur, Model town, ঢাকা, 1212',
@@ -35,6 +37,7 @@ class CentersTableSeeder extends Seeder
             ],
 
             [
+                'center_user_id' => 7,
                 'hospital' => 'Chattogram Medical College Hospital',
                 'division' => 'Chattogram',
                 'address' => 'Chattogram Medical College, Bakshibazar, Dhaka-1211',
@@ -44,6 +47,7 @@ class CentersTableSeeder extends Seeder
             ],
 
             [
+                'center_user_id' => 8,
                 'hospital' => 'Rajshahi Medical College Hospital',
                 'division' => 'Rajshahi',
                 'address' => 'Rajshahi Medical College, Bakshibazar, Dhaka-1211',
@@ -53,6 +57,7 @@ class CentersTableSeeder extends Seeder
             ],
 
             [
+                'center_user_id' => 9,
                 'hospital' => 'Khulna Medical College Hospital',
                 'division' => 'Khulna',
                 'address' => 'Khulna Medical College, Bakshibazar, Dhaka-1211',
@@ -62,6 +67,7 @@ class CentersTableSeeder extends Seeder
             ],
                 
             [
+                'center_user_id' => 10,
                 'hospital' => 'Barishal Medical College Hospital',
                 'division' => 'Barishal',
                 'address' => 'Barishal Medical College, Bakshibazar, Dhaka-1211',
@@ -71,6 +77,7 @@ class CentersTableSeeder extends Seeder
             ],
 
             [
+                'center_user_id' => 11,
                 'hospital' => 'Sylhet Medical College Hospital',
                 'division' => 'Sylhet',
                 'address' => 'Sylhet Medical College, Bakshibazar, Dhaka-1211',
@@ -80,6 +87,7 @@ class CentersTableSeeder extends Seeder
             ],
 
             [
+                'center_user_id' => 12,
                 'hospital' => 'Rangpur Medical College Hospital',
                 'division' => 'Rangpur',
                 'address' => 'Rangpur Medical College, Bakshibazar, Dhaka-1211',
@@ -89,6 +97,7 @@ class CentersTableSeeder extends Seeder
             ],
                 
             [
+                'center_user_id' => 13,
                 'hospital' => 'Mymensingh Medical College Hospital',
                 'division' => 'Mymensingh',
                 'address' => 'Mymensingh Medical College, Bakshibazar, Dhaka-1211',

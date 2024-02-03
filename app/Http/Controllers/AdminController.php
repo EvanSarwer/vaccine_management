@@ -69,13 +69,13 @@ class AdminController extends Controller
         $userData->address = $request->address;
 
         if($request->hasfile('photo')){
-            $destination = 'upload/admin_images/'.$userData->photo;
+            $destination = 'page_assets/img/'.$userData->photo;
             if(File::exists($destination)){
                 File::delete($destination);
             }
             $file = $request->file('photo');
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'),$filename);
+            $file->move(public_path('page_assets/img'),$filename);
             $userData['photo'] = $filename;
         }
         $userData->save();
@@ -601,17 +601,6 @@ class AdminController extends Controller
             'reNewPassword' => 'required|min:8'
         ]);
 
-        $center = new Center();
-
-        $center->hospital = $request->hospital;
-        $center->division = $request->division;
-        $center->address = $request->address;
-        $center->location_link = $request->location_link;
-        $center->phone = $request->phone;
-        $center->email = $request->email;
-        $center->save();
-
-
         // Center User Creation
         $user = new User();
         $user->username = $request->hospital;
@@ -622,6 +611,17 @@ class AdminController extends Controller
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->save();
+
+        // Center Creation
+        $center = new Center();
+        $center->center_user_id = $user->id;
+        $center->hospital = $request->hospital;
+        $center->division = $request->division;
+        $center->address = $request->address;
+        $center->location_link = $request->location_link;
+        $center->phone = $request->phone;
+        $center->email = $request->email;
+        $center->save();
 
         $notification = array(
             'message' => 'New Center Added Successfully',
@@ -649,7 +649,7 @@ class AdminController extends Controller
         ]);
 
         $center = Center::findOrFail($request->id);
-
+        
         $center->hospital = $request->hospital;
         $center->division = $request->division;
         $center->address = $request->address;
@@ -768,7 +768,7 @@ class AdminController extends Controller
     
 
     public function VaccineRegistrationView(){
-        $users = User::all();
+        $users = User::where('role', 'user')->get();
         $vaccines = Vaccine::all();
         return view('admin_user.admin.vaccine_registration',compact('vaccines','users'));
     }

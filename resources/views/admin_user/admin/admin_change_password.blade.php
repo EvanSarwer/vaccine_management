@@ -94,7 +94,7 @@
           <div class="card row">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="{{ (!empty($userData->photo)) ? url('upload/admin_images/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}" alt="Profile" class="rounded-circle">
+              <img src="{{ (!empty($userData->photo)) ? url('page_assets/img/'.$userData->photo) : url('upload/No_Image_Available.jpg') }}" alt="Profile" class="rounded-circle">
               <h2>{{$userData->username}}</h2>
               <!-- <h3>Web Designer</h3>
               <div class="social-links mt-2">
