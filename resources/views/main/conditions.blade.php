@@ -181,10 +181,10 @@
                             @if(isset($vaccines) && count($vaccines) > 0)
                             @foreach($vaccines as $vaccine)
 
-                                <tr>
+                                <tr style="height: 70px">
                                     <td>{{$vaccine->name}}</td>
                                     <td>{{$vaccine->doses_required}}</td>
-                                    <td>{{$vaccine->dose_gap ?? 'N/A'}}</td>
+                                    <td>{{($vaccine->dose_gap_number && $vaccine->dose_gap_time) ? $vaccine->dose_gap_number . ' - ' . $vaccine->dose_gap_time . 's' : 'Not available'}}</td>
                                 </tr>
 
                             @endforeach

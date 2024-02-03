@@ -243,7 +243,15 @@ class CenterUserController extends Controller
             }
         }
 
-        $center = Center::where('division',$request->division)->first();
+        $center = Center::where('id',$request->center_id)->where('division', $request->division)->first();
+        if(!$center){
+            $notification = array(
+                'message' => 'Center not found',
+                'alert-type' => 'error',
+            );
+    
+            return redirect('/admin/vaccination-status_list')->with($notification);
+        }
 
         $vaccine_take = new VaccineTake();
 
@@ -395,7 +403,15 @@ class CenterUserController extends Controller
             }
         }
 
-        $center = Center::where('division',$request->division)->first();
+        $center = Center::where('id',$request->center_id)->where('division', $request->division)->first();
+        if(!$center){
+            $notification = array(
+                'message' => 'Center not found',
+                'alert-type' => 'error',
+            );
+    
+            return redirect('/admin/vaccination-status_list')->with($notification);
+        }
 
         $vaccine_take = new VaccineTake();
 

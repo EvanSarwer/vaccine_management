@@ -24,9 +24,14 @@ class LandingPageController extends Controller
 
         $vaccines = Vaccine::all();
         foreach($vaccines as $vaccine){
-            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->sum('completed_doses');
-            $vaccine->taken = $vaccine_taken;
-            $vaccine->taken_percent = ($vaccine_taken/$vaccine->stock_quantity)*100;
+            // $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->sum('completed_doses');
+            // $vaccine->taken = $vaccine_taken;
+            // $vaccine->taken_percent = ($vaccine_taken/$vaccine->stock_quantity)*100; 
+
+            $vaccine->given_quantity = $vaccine->vaccine_takes->sum('completed_doses');
+            $vaccine->taken_percent = $vaccine->vaccine_stocks->sum('quantity') <= 0
+                    ? 0
+                    : round(($vaccine->given_quantity / $vaccine->vaccine_stocks->sum('quantity')) * 100, 3);
         }
 
         return view('main.myVaccine',compact('vaccines'));
