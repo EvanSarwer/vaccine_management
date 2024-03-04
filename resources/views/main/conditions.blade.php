@@ -203,6 +203,25 @@
     <!-- line End -->
 
 
+    <!-- Line Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-2 col">
+                    <h4>Ref:</h4>
+                </div>
+                <div class="col-10 col pt-2">
+        
+                    <p>[1] <a href="https://www.cdc.gov/vaccines/hcp/acip-recs/general-recs/timing.html">Timing and Spacing of Immunobiologics</a></p> <br />
+                    <p>[2] <a href="https://www.who.int/podcasts/series/science-in-5/episode--26---vaccine-dosage">How far apart should the doses of vaccines be?</a></p> <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- line End -->
+
+
 
     <!-- Line Start -->
     <div class="container-xxl py-5">

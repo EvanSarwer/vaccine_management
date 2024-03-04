@@ -754,15 +754,23 @@ class AdminController extends Controller
         }
 
         $vaccine_takes = VaccineTake::orderBy('order_date', 'desc')->get();
+        $vaccine_takes_user = [];
+        $vaccine_takes_underprivileged = [];
         foreach($vaccine_takes as $vaccine_take){
             $vaccine_take->user = $vaccine_take->user;
             $vaccine_take->vaccine = $vaccine_take->vaccine;
             $vaccine_take->center = $vaccine_take->center;
             $dose_date_details = json_decode($vaccine_take->dose_date_details);
             $vaccine_take->first_dose_date = $dose_date_details[0]->dose_date;
+
+            if($vaccine_take->user->role == 'user'){
+                $vaccine_takes_user[] = $vaccine_take;
+            }else{
+                $vaccine_takes_underprivileged[] = $vaccine_take;
+            }
         }
 
-        return view('admin_user.admin.vaccination_status_list',compact('vaccines','vaccine_takes'));
+        return view('admin_user.admin.vaccination_status_list',compact('vaccines','vaccine_takes_user','vaccine_takes_underprivileged'));
     } 
     
     

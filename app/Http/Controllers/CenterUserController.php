@@ -24,12 +24,20 @@ class CenterUserController extends Controller
         $user_id = Auth::user()->id;
         $center = Center::where('center_user_id',$user_id)->first();
         $vaccine_takes = VaccineTake::where('center_id',$center->id)->orWhere('user_id', $user_id)->orderBy('order_date', 'desc')->get();
+        $vaccine_takes_user = [];
+        $vaccine_takes_underprivileged = [];
         foreach($vaccine_takes as $vaccine_take){
             $vaccine_take->user = $vaccine_take->user;
             $vaccine_take->vaccine = $vaccine_take->vaccine;
             $vaccine_take->center = $vaccine_take->center;
             $dose_date_details = json_decode($vaccine_take->dose_date_details);
             $vaccine_take->first_dose_date = $dose_date_details[0]->dose_date;
+
+            if($vaccine_take->user->role == 'user'){
+                $vaccine_takes_user[] = $vaccine_take;
+            }else{
+                $vaccine_takes_underprivileged[] = $vaccine_take;
+            }
         }
 
         $vaccine_takes_all = VaccineTake::all();
@@ -40,7 +48,7 @@ class CenterUserController extends Controller
             $dose_date_details = json_decode($vaccine_take->dose_date_details);
             $vaccine_take->first_dose_date = $dose_date_details[0]->dose_date;
         }
-        return view('admin_user.center.index', compact('vaccine_takes','vaccine_takes_all','center'));
+        return view('admin_user.center.index', compact('vaccine_takes_user','vaccine_takes_underprivileged','vaccine_takes_all','center'));
     }
 
 
