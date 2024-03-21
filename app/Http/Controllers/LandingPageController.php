@@ -58,59 +58,115 @@ class LandingPageController extends Controller
         foreach($vaccines as $vaccine){
             $vaccine->disease = Disease::find($vaccine->disease_id);
 
-            $dhaka_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Dhaka')->sum('completed_doses');
+            $division = 'Dhaka';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($dhaka_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($dhaka_vaccine_list,$item);
 
-            $chattogram_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Chattogram')->sum('completed_doses');
+            $division = 'Chattogram';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($chattogram_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($chattogram_vaccine_list,$item);
 
-            $rajshahi_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Rajshahi')->sum('completed_doses');
+            $division = 'Rajshahi';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($rajshahi_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($rajshahi_vaccine_list,$item);
 
-            $mymensingh_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Mymensingh')->sum('completed_doses');
+            $division = 'Mymensingh';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($mymensingh_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($mymensingh_vaccine_list,$item);
 
-            $rangpur_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Rangpur')->sum('completed_doses');
+            $division = 'Rangpur';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($rangpur_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($rangpur_vaccine_list,$item);
 
-            $sylhet_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Sylhet')->sum('completed_doses');
+            $division = 'Sylhet';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($sylhet_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($sylhet_vaccine_list,$item);
 
-            $barishal_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Barishal')->sum('completed_doses');
+            $division = 'Barishal';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($barishal_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($barishal_vaccine_list,$item);
 
-            $khulna_vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', 'Khulna')->sum('completed_doses');
+            $division = 'Khulna';
+            $vaccine_taken = VaccineTake::where('vaccine_id',$vaccine->id)->where('division', $division)->sum('completed_doses');
             $item = (object)[
                 'vaccine' => $vaccine,
-                'vaccine_taken_percent' => $vaccine->stock_quentity <= 0 ? 0 : ($khulna_vaccine_taken / $vaccine->stock_quantity) * 100
+                'vaccine_taken_percent' => $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity') <= 0
+                ? 0
+                : round(($vaccine_taken / $vaccine->vaccine_stocks->filter(function ($stock) use ($division) {
+                    return $stock->center->division === $division;
+                })->sum('quantity')) * 100, 3)
             ];
             array_push($khulna_vaccine_list,$item);
 
